@@ -35,7 +35,7 @@ const projectTypes = [
 const labelClass =
   "contact-label mb-2 block font-bold uppercase tracking-wider text-[#4A4F55]";
 const controlClass =
-  "contact-control w-full rounded-xl border border-[#7A5010]/30 bg-[#F6F5F1] text-[#242620] placeholder:text-[#7C8288] transition focus:border-[#7A5010] focus:ring-2 focus:ring-[#7A5010]/20 focus:outline-none";
+  "contact-control w-full min-w-0 rounded-xl border border-[#7A5010]/30 bg-[#F6F5F1] text-[#242620] placeholder:text-[#7C8288] transition focus:border-[#7A5010] focus:ring-2 focus:ring-[#7A5010]/20 focus:outline-none";
 
 export default function ContactForm() {
   const id = useId();
@@ -126,7 +126,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="panel contact-form p-5 sm:p-6">
+    <form onSubmit={handleSubmit} noValidate className="panel contact-form w-full min-w-0 max-w-full p-5 sm:p-6">
       <span className="eyebrow mb-2">Project Inquiry</span>
       <h3 className="font-heading text-2xl font-bold text-[#242620] sm:text-3xl">
         Send Us the Details

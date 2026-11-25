@@ -43,7 +43,7 @@ export default function VisionMissionSection() {
                 className="h-full"
               >
                 <article className="panel panel-hover flex h-full flex-col">
-                  <div className="media-box media-clean media-top media-ratio">
+                  <div className="media-box media-clean media-top aspect-[16/7]">
                     <SiteImage src={image} alt={item.title} loading="lazy" />
                     <span className="absolute left-5 top-5 z-10 grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-[#FFE08A] via-[#FFB800] to-[#E09500] text-[#242620] shadow-[0_10px_24px_rgba(30,27,22,0.14)]">
                       <Icon size={21} />

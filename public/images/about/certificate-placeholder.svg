@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" role="img" aria-labelledby="title description">
+  <title id="title">Certificate image placeholder</title>
+  <desc id="description">Demo image placeholder, not a certificate. Replace with a verified certificate image.</desc>
+  <rect width="720" height="480" fill="#f5f3ee"/>
+  <rect x="42" y="36" width="636" height="408" rx="18" fill="#fff" stroke="#d6a12b" stroke-width="4"/>
+  <rect x="64" y="58" width="592" height="364" rx="10" fill="none" stroke="#e6e2d7" stroke-width="2"/>
+  <circle cx="360" cy="146" r="39" fill="#d6a12b" fill-opacity=".18"/>
+  <path d="M342 146h36M360 128v36" stroke="#7a5010" stroke-linecap="round" stroke-width="5"/>
+  <text x="360" y="226" fill="#17232d" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">CERTIFICATE IMAGE</text>
+  <text x="360" y="264" fill="#747d85" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">TO BE UPDATED</text>
+  <text x="360" y="326" fill="#b13a32" font-family="Arial, sans-serif" font-size="17" font-weight="700" text-anchor="middle">DEMO PLACEHOLDER — NOT A CERTIFICATE</text>
+</svg>

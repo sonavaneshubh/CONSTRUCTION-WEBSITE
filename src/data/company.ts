@@ -3,7 +3,7 @@
 // ============================================================
 
 const officeAddress =
-  "Alsunde, Taluka Karjat, District Ahilyanagar, Maharashtra, India.";
+  "G A PALVE And COMPANY, Nandgaon, Alsunde, Maharashtra 414402";
 
 export const company = {
   name: "G A Palve and Company",
@@ -25,7 +25,7 @@ export const company = {
   },
   maps: {
     embedUrl: `https://www.google.com/maps?q=${encodeURIComponent(officeAddress)}&output=embed`,
-    directionsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(officeAddress)}`,
+    directionsUrl: "https://maps.app.goo.gl/UWn5hW5Fe78MNVx97?g_st=aw",
   },
   whatsappMessage:
     "Hello, I would like to inquire about G A Palve and Company's civil & infrastructure construction services.",

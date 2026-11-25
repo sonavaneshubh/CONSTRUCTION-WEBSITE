@@ -398,7 +398,7 @@ export default function HomeHero() {
 
       <div className="home-hero__overlay absolute inset-0 z-10" aria-hidden="true" />
 
-      <div className="relative z-20 mx-auto flex min-h-[100svh] w-full max-w-[1500px] box-border flex-col justify-center px-5 pb-14 pt-[6.75rem] lg:justify-between lg:px-12 lg:pb-14 lg:pt-[5.75rem] xl:px-16">
+      <div className="relative z-20 mx-auto flex min-h-[100svh] w-full max-w-[1500px] box-border flex-col justify-center px-5 pb-10 pt-[6.75rem] lg:justify-between lg:px-12 lg:pb-10 lg:pt-[5.75rem] xl:px-16">
         <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,58fr)_minmax(0,42fr)] lg:items-center lg:gap-8">
           <div className="min-w-0">
             <div
@@ -458,7 +458,7 @@ export default function HomeHero() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/25 pt-8 lg:mt-8">
+        <div className="mt-8 border-t border-white/25 pt-5 lg:mt-6">
           <ul className="grid grid-cols-2 gap-y-3 sm:grid-cols-4 xl:grid-cols-7 xl:gap-y-0">
             {serviceCategories.map(({ label, icon: Icon }, index) => (
               <li

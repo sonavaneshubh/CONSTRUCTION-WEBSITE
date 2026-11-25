@@ -671,8 +671,40 @@
   padding-top: clamp(0.75rem, 1.25vw, 1rem);
 }
 
+.about-page .section-pad {
+  padding-block: clamp(2.5rem, 4vw, 4rem);
+}
+
+.about-page .page-intro-content {
+  padding-bottom: clamp(2.5rem, 4vw, 4rem);
+}
+
+.about-page .reveal,
+.about-page .reveal-left,
+.about-page .reveal-right {
+  transition-duration: 600ms;
+}
+
+.about-page > section:last-child {
+  padding-block: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.interior-page .about-establishment .about-establishment__title {
+  color: #FFFFFF;
+}
+
 @media (min-width: 1024px) {
   .interior-page .page-intro {
+    padding-top: 5.5rem;
+  }
+}
+
+.about-page .page-intro {
+  padding: 5rem 0 0;
+}
+
+@media (min-width: 1024px) {
+  .about-page .page-intro {
     padding-top: 5.5rem;
   }
 }

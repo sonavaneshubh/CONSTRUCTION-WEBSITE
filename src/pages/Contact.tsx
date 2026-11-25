@@ -70,11 +70,11 @@ export default function Contact() {
                   alt="Land development and infrastructure site preparation"
                   loading="lazy"
                 />
-                <div className="panel absolute bottom-0 left-0 z-10 m-4 max-w-[15rem] p-4 sm:max-w-[17rem]">
-                  <p className="font-heading text-2xl font-extrabold text-[#7A5010]">
+                <div className="absolute bottom-3 left-3 z-10 m-0 max-w-[12rem] rounded-xl border border-[#EAE6DC] bg-[#FFFDF8] px-3 py-2.5 shadow-[0_8px_20px_rgba(30,27,22,0.12)] sm:bottom-4 sm:left-4 sm:max-w-[13rem]">
+                  <p className="font-heading text-base font-extrabold leading-tight text-[#7A5010]">
                     Quick Response
                   </p>
-                  <p className="mt-1 text-xs text-[#4A4F55]">
+                  <p className="mt-0.5 text-[11px] leading-snug text-[#4A4F55]">
                     We review every project inquiry carefully.
                   </p>
                 </div>
