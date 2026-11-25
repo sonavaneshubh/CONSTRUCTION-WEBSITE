@@ -1,22 +1,21 @@
-import PageBanner from "../components/PageBanner";
 import ScrollReveal from "../components/ScrollReveal";
 import VisionMissionSection from "../components/VisionMissionSection";
 import SiteImage from "../components/SiteImage";
 import CTASection from "../components/CTASection";
+import PageIntro from "../components/PageIntro";
 import { strengths } from "../data/company";
 import { Award, CheckCircle2, ShieldCheck } from "lucide-react";
 
 export default function About() {
   return (
-    <div className="bg-[#FAFAF8] text-[#4A4F55]">
-      <PageBanner
-        tag="Corporate Profile"
-        title="About G A Palve and Company"
-        subtitle="A trusted civil construction and infrastructure partner for government bodies, municipalities and private developers."
-        image="/images/hero/bridge-construction.jpg"
+    <div className="interior-page">
+      <PageIntro
+        eyebrow="Our Story"
+        title="Engineering With Purpose"
+        subtitle="G A Palve and Company delivers turnkey civil construction across highways, bridges, buildings, water supply systems and government infrastructure projects. Every assignment is executed with technical discipline and complete accountability."
       />
 
-      <section className="section-surface section-pad">
+      <section className="page-intro-content section-surface section-pad">
         <div className="site-container relative z-10 grid items-center gap-5 lg:grid-cols-2 lg:gap-6">
           <ScrollReveal direction="right">
             <div className="media-box media-ratio">
@@ -35,27 +34,12 @@ export default function About() {
           </ScrollReveal>
 
           <ScrollReveal direction="left">
-            <div className="section-head max-w-none items-start text-left">
-              <span className="eyebrow hero-stagger" style={{ animationDelay: "60ms" }}>Our Story</span>
-              <h2 className="section-title [text-wrap:balance]">
-                <span className="line-mask">
-                  <span className="text-line" style={{ animationDelay: "180ms" }}>
-                    Engineering With <span className="gradient-text">Purpose</span>
-                  </span>
-                </span>
-              </h2>
-              <p className="section-copy">
-                G A Palve and Company delivers turnkey civil construction across
-                highways, bridges, buildings, water supply systems and government
-                infrastructure projects. Every assignment is executed with
-                technical discipline and complete accountability.
-              </p>
-              <p className="section-copy">
+            <div className="max-w-2xl">
+              <p className="text-sm leading-7 text-[#343C43] sm:text-base">
                 From tender evaluation and site planning to final commissioning,
                 our engineers, supervisors and machinery teams work as one to
                 achieve durable outcomes, on schedule and within budget.
               </p>
-              <div className="gold-line" />
             </div>
 
             <div className="mt-5 grid gap-3 sm:grid-cols-2">

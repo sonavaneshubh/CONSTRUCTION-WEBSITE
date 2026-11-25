@@ -1,7 +1,7 @@
-import PageBanner from "../components/PageBanner";
 import ScrollReveal from "../components/ScrollReveal";
 import SiteImage from "../components/SiteImage";
 import ContactForm from "../components/ContactForm";
+import PageIntro from "../components/PageIntro";
 import { company } from "../data/company";
 import {
   Clock,
@@ -53,15 +53,14 @@ export default function Contact() {
   ];
 
   return (
-    <div className="bg-[#FAFAF8] text-[#4A4F55]">
-      <PageBanner
-        tag="Get In Touch"
-        title="Contact G A Palve and Company"
-        subtitle="Share your project requirements with our engineering and tender team. We respond with clear, practical guidance."
-        image="/images/hero/water-supply-pipeline.jpg"
+    <div className="interior-page">
+      <PageIntro
+        eyebrow="Direct Contact"
+        title="Let's Discuss Your Next Project"
+        subtitle="Whether it is a highway package, municipal water network, commercial building or PWD tender, our team is ready to evaluate your scope."
       />
 
-      <section className="section-surface section-pad">
+      <section className="page-intro-content section-surface section-pad">
         <div className="site-container relative z-10 grid gap-4 lg:grid-cols-12 lg:items-start lg:gap-5">
           <div className="min-w-0 lg:col-span-5">
             <ScrollReveal direction="right">
@@ -79,23 +78,6 @@ export default function Contact() {
                     We review every project inquiry carefully.
                   </p>
                 </div>
-              </div>
-
-              <div className="section-head max-w-none items-start text-left">
-                <span className="eyebrow hero-stagger" style={{ animationDelay: "60ms" }}>Direct Contact</span>
-                <h2 className="section-title [text-wrap:balance]">
-                  <span className="line-mask">
-                    <span className="text-line" style={{ animationDelay: "180ms" }}>
-                      Let&apos;s Discuss Your <span className="gradient-text">Next Project</span>
-                    </span>
-                  </span>
-                </h2>
-                <p className="section-copy">
-                  Whether it is a highway package, municipal water network,
-                  commercial building or PWD tender, our team is ready to evaluate
-                  your scope.
-                </p>
-                <div className="gold-line" />
               </div>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-2">

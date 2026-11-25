@@ -12,10 +12,10 @@ import {
   Sun,
   Waves,
 } from "lucide-react";
-import PageBanner from "../components/PageBanner";
 import ScrollReveal from "../components/ScrollReveal";
 import SiteImage from "../components/SiteImage";
 import CTASection from "../components/CTASection";
+import PageIntro from "../components/PageIntro";
 import { services } from "../data/services";
 
 const iconMap: Record<string, React.ElementType> = {
@@ -32,35 +32,15 @@ const iconMap: Record<string, React.ElementType> = {
 
 export default function Services() {
   return (
-    <div className="bg-[#FAFAF8] text-[#4A4F55]">
-      <PageBanner
-        tag="Our Expertise"
-        title="Construction Services"
-        subtitle="End-to-end civil, infrastructure and turnkey solutions for public tenders, private developments and industrial corridors."
-        image="/images/hero/jcb-earthmoving.jpg"
+    <div className="interior-page">
+      <PageIntro
+        eyebrow="What We Deliver"
+        title="One Partner for Every Stage"
+        subtitle="Explore our core disciplines. Each service is backed by experienced engineers, controlled site processes and a commitment to measurable quality."
       />
 
-      <section className="section-surface section-pad">
+      <section className="page-intro-content section-surface section-pad">
         <div className="site-container relative z-10">
-          <ScrollReveal>
-            <div className="section-head mx-auto max-w-3xl">
-              <span className="eyebrow hero-stagger" style={{ animationDelay: "60ms" }}>What We Deliver</span>
-              <h2 className="section-title [text-wrap:balance]">
-                <span className="line-mask">
-                  <span className="text-line" style={{ animationDelay: "180ms" }}>
-                    One Partner for <span className="gradient-text">Every Stage</span>
-                  </span>
-                </span>
-              </h2>
-              <p className="section-copy">
-                Explore our core disciplines. Each service is backed by experienced
-                engineers, controlled site processes and a commitment to measurable
-                quality.
-              </p>
-              <div className="gold-line mx-auto" />
-            </div>
-          </ScrollReveal>
-
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((service, index) => {
               const Icon = iconMap[service.icon] || Building2;

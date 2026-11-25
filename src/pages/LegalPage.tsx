@@ -1,5 +1,5 @@
-import PageBanner from "../components/PageBanner";
 import ScrollReveal from "../components/ScrollReveal";
+import PageIntro from "../components/PageIntro";
 
 interface Props {
   type: "privacy" | "terms";
@@ -60,15 +60,14 @@ export default function LegalPage({ type }: Props) {
   const content = legalContent[type];
 
   return (
-    <div className="bg-[#FAFAF8] text-[#4A4F55]">
-      <PageBanner
-        tag={content.eyebrow}
+    <div className="interior-page">
+      <PageIntro
+        eyebrow={content.eyebrow}
         title={content.title}
         subtitle={content.intro}
-        image="/images/hero/road-construction.jpg"
       />
 
-      <section className="section-pad">
+      <section className="page-intro-content section-pad">
         <div className="site-container">
           <ScrollReveal>
             <div className="panel mx-auto max-w-4xl">

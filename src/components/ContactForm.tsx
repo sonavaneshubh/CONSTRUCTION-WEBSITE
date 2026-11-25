@@ -145,13 +145,15 @@ export default function ContactForm() {
             name="name"
             type="text"
             autoComplete="name"
+            required
             value={data.name}
             onChange={(event) => update("name", event.target.value)}
             aria-invalid={Boolean(errors.name)}
+            aria-describedby={errors.name ? `${id}-name-error` : undefined}
             className={`${controlClass} ${errors.name ? "!border-red-500" : ""}`}
             placeholder="Your full name"
           />
-          {errors.name && <p className="contact-error mt-1 text-red-600">{errors.name}</p>}
+          {errors.name && <p id={`${id}-name-error`} role="alert" className="contact-error mt-1 text-red-600">{errors.name}</p>}
         </div>
 
         <div>
@@ -163,13 +165,15 @@ export default function ContactForm() {
             name="phone"
             type="tel"
             autoComplete="tel"
+            required
             value={data.phone}
             onChange={(event) => update("phone", event.target.value)}
             aria-invalid={Boolean(errors.phone)}
+            aria-describedby={errors.phone ? `${id}-phone-error` : undefined}
             className={`${controlClass} ${errors.phone ? "!border-red-500" : ""}`}
             placeholder="+91 9577743777"
           />
-          {errors.phone && <p className="contact-error mt-1 text-red-600">{errors.phone}</p>}
+          {errors.phone && <p id={`${id}-phone-error`} role="alert" className="contact-error mt-1 text-red-600">{errors.phone}</p>}
         </div>
 
         <div>
@@ -181,13 +185,15 @@ export default function ContactForm() {
             name="email"
             type="email"
             autoComplete="email"
+            required
             value={data.email}
             onChange={(event) => update("email", event.target.value)}
             aria-invalid={Boolean(errors.email)}
+            aria-describedby={errors.email ? `${id}-email-error` : undefined}
             className={`${controlClass} ${errors.email ? "!border-red-500" : ""}`}
             placeholder="you@company.com"
           />
-          {errors.email && <p className="contact-error mt-1 text-red-600">{errors.email}</p>}
+          {errors.email && <p id={`${id}-email-error`} role="alert" className="contact-error mt-1 text-red-600">{errors.email}</p>}
         </div>
 
         <div>
@@ -234,13 +240,15 @@ export default function ContactForm() {
             id={`${id}-message`}
             name="message"
             rows={5}
+            required
             value={data.message}
             onChange={(event) => update("message", event.target.value)}
             aria-invalid={Boolean(errors.message)}
+            aria-describedby={errors.message ? `${id}-message-error` : undefined}
             className={`${controlClass} resize-none ${errors.message ? "!border-red-500" : ""}`}
             placeholder="Tell us about scope, tender deadlines or structural requirements..."
           />
-          {errors.message && <p className="contact-error mt-1 text-red-600">{errors.message}</p>}
+          {errors.message && <p id={`${id}-message-error`} role="alert" className="contact-error mt-1 text-red-600">{errors.message}</p>}
         </div>
       </div>
 

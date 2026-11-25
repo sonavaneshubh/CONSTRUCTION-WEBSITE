@@ -3,6 +3,7 @@ import { projects } from "../data/projects";
 import ScrollReveal from "../components/ScrollReveal";
 import SiteImage from "../components/SiteImage";
 import CTASection from "../components/CTASection";
+import PageIntro from "../components/PageIntro";
 import {
   MapPin,
   Calendar,
@@ -20,7 +21,7 @@ export default function ProjectDetails() {
 
   if (!project) {
     return (
-      <div className="flex min-h-[65vh] items-center justify-center bg-[#FAFAF8] py-12 text-[#4A4F55]">
+      <div className="interior-page flex min-h-[65vh] items-center justify-center py-12">
         <div className="site-container">
           <ScrollReveal>
             <div className="panel mx-auto max-w-md p-6 text-center sm:p-6">
@@ -43,44 +44,12 @@ export default function ProjectDetails() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8] text-[#4A4F55]">
-      <section className="page-banner relative isolate flex min-h-[300px] items-center overflow-hidden bg-[#17232D] py-16 pt-28 text-white sm:min-h-[360px]">
-        <SiteImage
-          src={project.coverImage}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="page-banner__overlay absolute inset-0 z-10" aria-hidden="true" />
-
-        <div className="site-container relative z-20">
-          <ScrollReveal>
-            <div className="mx-auto max-w-4xl text-center">
-              <span
-                className="eyebrow border-[#D6A12B]/40 bg-[#D6A12B]/15 text-[#F5F3EE] hero-stagger"
-                style={{ animationDelay: "60ms" }}
-              >
-                <Tag size={13} />
-                {project.category}
-              </span>
-              <h1 className="page-banner__title mt-5 font-heading text-[clamp(2rem,4.2vw,3.4rem)] font-extrabold leading-[1.12] tracking-[-0.04em]">
-                <span className="line-mask">
-                  <span className="text-line" style={{ animationDelay: "180ms" }}>
-                    {project.title}
-                  </span>
-                </span>
-              </h1>
-              <p
-                className="hero-stagger mt-4 flex items-center justify-center gap-2 text-sm text-[#F5F3EE]/90 sm:text-base"
-                style={{ animationDelay: "340ms" }}
-              >
-                <MapPin size={18} className="shrink-0 text-[#D6A12B]" />
-                <span>{project.location}</span>
-              </p>
-              <div className="hero-stagger gold-line mx-auto mt-5" style={{ animationDelay: "460ms" }} />
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+    <div className="interior-page min-h-screen">
+      <PageIntro
+        eyebrow={project.category}
+        title={project.title}
+        subtitle={project.location}
+      />
 
       <nav aria-label="Breadcrumb" className="border-y border-[#FFB800]/25 bg-white">
         <div className="site-container py-3.5">
@@ -108,7 +77,7 @@ export default function ProjectDetails() {
         </div>
       </nav>
 
-      <section className="section-surface section-pad">
+      <section className="page-intro-content section-surface section-pad">
         <div className="site-container relative z-10">
           <div className="grid gap-5 lg:grid-cols-12 lg:gap-6">
             <div className="lg:col-span-8">
@@ -144,7 +113,7 @@ export default function ProjectDetails() {
 
             <div className="min-w-0 lg:col-span-4">
               <ScrollReveal direction="left">
-                <aside className="panel card-body sticky top-28 sm:p-6">
+                <aside className="panel card-body lg:sticky lg:top-28 sm:p-6">
                   <div className="flex min-w-0 items-center justify-between gap-3 border-b border-[#FFB800]/30 pb-4">
                     <h3 className="min-w-0 font-heading text-xl font-bold text-[#242620]">
                       Project Specifications

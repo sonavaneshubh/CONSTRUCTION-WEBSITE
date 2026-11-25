@@ -307,7 +307,7 @@ export default function HomeHero() {
     if (prefersReducedMotion || documentHidden || incoming !== null) return;
     const id = setTimeout(() => {
       changeTo((currentRef.current + 1) % slides.length);
-    }, 6500);
+    }, 5500);
     return () => clearTimeout(id);
   }, [changeTo, current, documentHidden, incoming, prefersReducedMotion]);
 

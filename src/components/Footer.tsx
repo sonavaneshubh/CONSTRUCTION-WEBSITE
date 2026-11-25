@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowUp,
@@ -43,6 +44,21 @@ const socialLinks = [
 const currentYear = new Date().getFullYear();
 
 export default function Footer() {
+  const footerRef = useRef<HTMLElement | null>(null);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowBackToTop(entry.isIntersecting),
+      { threshold: 0.15 },
+    );
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
+
   const scrollToTop = () => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -54,7 +70,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative isolate overflow-hidden border-t border-[#EAE6DC] bg-[#F6F5F1] text-[#4A4F55]">
+    <footer ref={footerRef} className="relative isolate overflow-hidden border-t border-[#EAE6DC] bg-[#F6F5F1] text-[#4A4F55]">
       <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-[#F6F5F1]/80 to-[#F0EEE7]/90" />
       <div
         className="hero-beam absolute -left-1/3 top-[-40%] h-[180%] w-2/3 bg-gradient-to-r from-transparent via-[#FFB800]/10 to-transparent blur-3xl"
@@ -195,7 +211,11 @@ export default function Footer() {
           </section>
         </div>
 
-        <div className="relative z-20 flex justify-center">
+        <div
+          className={`relative z-20 flex justify-center transition-all duration-300 motion-reduce:transition-none ${
+            showBackToTop ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
+          }`}
+        >
           <button
             type="button"
             onClick={scrollToTop}
@@ -209,7 +229,7 @@ export default function Footer() {
 
         <div className="flex flex-col gap-3 pt-3 text-xs text-[#666C73] sm:flex-row sm:items-center sm:justify-between">
           <p>© {currentYear} {company.name}. All rights reserved.</p>
-            <nav className="flex flex-wrap items-center gap-x-3 gap-y-1" aria-label="Legal navigation">
+          <nav className="flex flex-wrap items-center gap-x-3 gap-y-1" aria-label="Legal navigation">
             <Link to="/privacy-policy" className="transition-colors hover:text-[#7A5010]">
               Privacy Policy
             </Link>
@@ -220,15 +240,6 @@ export default function Footer() {
               Terms &amp; Conditions
             </Link>
           </nav>
-          <button
-            type="button"
-            onClick={scrollToTop}
-            className="btn-shine inline-flex items-center gap-2 self-start rounded-lg border border-[#B37F00]/40 bg-white px-4 py-1.5 font-bold text-[#7A5010] transition-colors hover:bg-[#FFB800] hover:text-[#242620] sm:self-auto"
-            aria-label="Back to top"
-          >
-            <ArrowUp size={14} aria-hidden="true" />
-            Back to Top
-          </button>
         </div>
       </div>
     </footer>

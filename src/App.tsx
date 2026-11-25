@@ -8,6 +8,7 @@ import About from "./pages/About";
 import Services from "./pages/Services";
 import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
+import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
 import LegalPage from "./pages/LegalPage";
 
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:id" element={<ProjectDetails />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<LegalPage type="privacy" />} />
           <Route path="/terms-conditions" element={<LegalPage type="terms" />} />

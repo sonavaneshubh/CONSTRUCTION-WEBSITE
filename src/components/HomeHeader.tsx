@@ -9,7 +9,7 @@ const navLinks = [
   { label: "About Us", path: "/about" },
   { label: "Services", path: "/services" },
   { label: "Projects", path: "/projects" },
-  { label: "Vision & Mission", path: "/about#vision-mission" },
+  { label: "Gallery", path: "/gallery" },
   { label: "Contact", path: "/contact" },
 ];
 
@@ -70,26 +70,20 @@ export default function HomeHeader() {
     return () => media.removeEventListener("change", handleChange);
   }, []);
 
-  const isActiveLink = (path: string, isActive: boolean) => {
-    if (path === "/about") return isActive && location.hash !== "#vision-mission";
-    if (path === "/about#vision-mission") {
-      return isActive && location.hash === "#vision-mission";
-    }
-    return isActive;
-  };
+  const isActiveLink = (isActive: boolean) => isActive;
 
   const closeMenu = () => setMobileOpen(false);
 
-  const desktopLinkClass = (path: string, isActive: boolean) =>
+  const desktopLinkClass = (isActive: boolean) =>
     `relative whitespace-nowrap px-2 py-2 text-[11px] font-bold transition-colors xl:px-2.5 xl:text-xs 2xl:text-sm ${
-      isActiveLink(path, isActive)
+      isActiveLink(isActive)
         ? "text-[#7A5010]"
         : "text-[#4A4F55] hover:text-[#7A5010]"
     }`;
 
-  const mobileLinkClass = (path: string, isActive: boolean) =>
+  const mobileLinkClass = (isActive: boolean) =>
     `relative flex min-h-12 items-center px-4 py-3 font-heading text-base font-bold transition-colors ${
-      isActiveLink(path, isActive)
+      isActiveLink(isActive)
         ? "text-[#7A5010]"
         : "text-[#4A4F55] hover:text-[#7A5010]"
     }`;
@@ -143,12 +137,12 @@ export default function HomeHeader() {
                   key={link.path}
                   to={link.path}
                   end={link.path === "/"}
-                  className={({ isActive }) => desktopLinkClass(link.path, isActive)}
+                  className={({ isActive }) => desktopLinkClass(isActive)}
                 >
                   {({ isActive }) => (
                     <>
                       {link.label}
-                      {isActiveLink(link.path, isActive) && (
+                      {isActiveLink(isActive) && (
                         <span
                           className="absolute inset-x-2 -bottom-0.5 h-[3px] rounded-full bg-[#FFB800]"
                           aria-hidden="true"
@@ -163,12 +157,12 @@ export default function HomeHeader() {
                 <div className="flex items-center">
                   <NavLink
                     to="/services"
-                    className={({ isActive }) => desktopLinkClass("/services", isActive)}
+                    className={({ isActive }) => desktopLinkClass(isActive)}
                   >
                     {({ isActive }) => (
                       <>
                         Services
-                        {isActiveLink("/services", isActive) && (
+                        {isActiveLink(isActive) && (
                           <span
                             className="absolute inset-x-2 -bottom-0.5 h-[3px] rounded-full bg-[#FFB800]"
                             aria-hidden="true"
@@ -200,12 +194,12 @@ export default function HomeHeader() {
                 <NavLink
                   key={link.path}
                   to={link.path}
-                  className={({ isActive }) => desktopLinkClass(link.path, isActive)}
+                  className={({ isActive }) => desktopLinkClass(isActive)}
                 >
                   {({ isActive }) => (
                     <>
                       {link.label}
-                      {isActiveLink(link.path, isActive) && (
+                      {isActiveLink(isActive) && (
                         <span
                           className="absolute inset-x-2 -bottom-0.5 h-[3px] rounded-full bg-[#FFB800]"
                           aria-hidden="true"
@@ -252,11 +246,11 @@ export default function HomeHeader() {
                 to={link.path}
                 end={link.path === "/"}
                 onClick={closeMenu}
-                className={({ isActive }) => mobileLinkClass(link.path, isActive)}
+                className={({ isActive }) => mobileLinkClass(isActive)}
               >
                 {({ isActive }) => (
                   <>
-                    {isActiveLink(link.path, isActive) && (
+                    {isActiveLink(isActive) && (
                       <span
                         className="absolute bottom-3 left-0 top-3 w-[3px] rounded-full bg-[#FFB800]"
                         aria-hidden="true"
