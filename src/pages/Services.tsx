@@ -1,0 +1,127 @@
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  Building2,
+  CheckCircle2,
+  Droplets,
+  Home,
+  Landmark,
+  Palette,
+  Route,
+  Shovel,
+  Sun,
+} from "lucide-react";
+import PageBanner from "../components/PageBanner";
+import ScrollReveal from "../components/ScrollReveal";
+import CTASection from "../components/CTASection";
+import { services } from "../data/services";
+
+const iconMap: Record<string, React.ElementType> = {
+  "building-2": Building2,
+  route: Route,
+  droplets: Droplets,
+  landmark: Landmark,
+  home: Home,
+  sun: Sun,
+  shovel: Shovel,
+  palette: Palette,
+};
+
+export default function Services() {
+  return (
+    <div className="bg-[#FAFAF8] text-[#4A4F55]">
+      <PageBanner
+        tag="Our Expertise"
+        title="Construction Services"
+        subtitle="End-to-end civil, infrastructure and turnkey solutions for public tenders, private developments and industrial corridors."
+        image="/images/hero/tower-cranes.jpg"
+      />
+
+      <section className="section-surface section-pad">
+        <div className="site-container relative z-10">
+          <ScrollReveal>
+            <div className="section-head mx-auto max-w-3xl">
+              <span className="eyebrow hero-stagger" style={{ animationDelay: "60ms" }}>What We Deliver</span>
+              <h2 className="section-title [text-wrap:balance]">
+                <span className="line-mask">
+                  <span className="text-line" style={{ animationDelay: "180ms" }}>
+                    One Partner for <span className="gradient-text">Every Stage</span>
+                  </span>
+                </span>
+              </h2>
+              <p className="section-copy">
+                Explore our core disciplines. Each service is backed by experienced
+                engineers, controlled site processes and a commitment to measurable
+                quality.
+              </p>
+              <div className="gold-line mx-auto" />
+            </div>
+          </ScrollReveal>
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {services.map((service, index) => {
+              const Icon = iconMap[service.icon] || Building2;
+              return (
+                <ScrollReveal key={service.id} delay={(index % 3) * 70}>
+                  <article id={service.id} className="panel panel-hover flex h-full scroll-mt-28 flex-col">
+                    <div className="media-box media-clean media-top media-ratio-wide rounded-none">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        loading="lazy"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            "/images/hero/construction.jpg";
+                        }}
+                      />
+                    </div>
+
+                    <div className="card-body flex flex-1 flex-col">
+                      <div className="mb-2 flex items-start justify-between gap-3">
+                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#FFE08A] via-[#FFB800] to-[#E09500] text-[#242620] shadow-lg shadow-[#FFB800]/20">
+                          <Icon size={21} />
+                        </span>
+                        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#666C73]">
+                          0{index + 1}
+                        </span>
+                      </div>
+
+                      <h3 className="font-heading text-lg font-bold leading-snug text-[#242620]">
+                        {service.title}
+                      </h3>
+                      <p className="mt-1 text-sm leading-relaxed text-[#666C73]">
+                        {service.shortDescription}
+                      </p>
+
+                      <ul className="mt-2 space-y-2 border-t border-[#FFB800]/25 pt-4">
+                        {service.capabilities.slice(0, 3).map((capability) => (
+                          <li key={capability} className="flex items-start gap-2 text-sm text-[#4A4F55]">
+                            <CheckCircle2 size={14} className="mt-0.5 shrink-0 text-[#7A5010]" />
+                            {capability}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <Link
+                        to="/contact"
+                        className="mt-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#7A5010] transition-colors hover:text-[#242620]"
+                      >
+                        Discuss This Service
+                        <ArrowRight size={14} />
+                      </Link>
+                    </div>
+                  </article>
+                </ScrollReveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <CTASection
+        heading="Need a Turnkey Infrastructure Partner?"
+        text="Tell us about your tender, site or development plan. Our engineering team will prepare a practical next step."
+      />
+    </div>
+  );
+}
