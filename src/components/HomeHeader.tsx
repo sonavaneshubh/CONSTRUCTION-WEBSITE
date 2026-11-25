@@ -15,17 +15,33 @@ const navLinks = [
 
 const serviceMenu = [
   { label: "Road Construction", id: "road-construction" },
+  { label: "JCB & Earthwork", id: "land-development" },
+  { label: "Well Construction", id: "well-construction" },
   { label: "Water Supply Systems", id: "water-supply-systems" },
+  { label: "Bridges & Civil Works", id: "civil-construction" },
+  { label: "PWD Contracting", id: "pwd-government-contracting" },
   { label: "Solar Solutions", id: "solar-energy-solutions" },
   { label: "Building Construction", id: "building-construction" },
-  { label: "Land Development", id: "land-development" },
   { label: "Interior Design", id: "interior-design" },
 ];
 
 export default function HomeHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [logoFailed, setLogoFailed] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const isHome = location.pathname === "/";
+
+  useEffect(() => {
+    if (!isHome) {
+      return;
+    }
+
+    const updateScrollState = () => setIsScrolled(window.scrollY > 24);
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollState);
+  }, [isHome]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -80,9 +96,15 @@ export default function HomeHeader() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 rounded-b-2xl border-b border-[#EAE6DC] bg-white shadow-[0_10px_35px_rgba(30,27,22,0.08)]">
+      <header
+        className={`fixed inset-x-0 top-0 z-50 rounded-b-2xl border-b border-[#EAE6DC] transition-[background-color,box-shadow] duration-300 ${
+          isHome && isScrolled
+            ? "bg-white/95 shadow-[0_6px_24px_rgba(23,35,45,0.12)] backdrop-blur-md"
+            : "bg-white shadow-[0_10px_35px_rgba(30,27,22,0.08)]"
+        }`}
+      >
         <div className="mx-auto w-full max-w-[1500px] px-5 sm:px-8 lg:px-12 xl:px-16">
-          <div className="flex h-[4.25rem] items-center justify-between gap-2.5 lg:h-[4.5rem]">
+          <div className="flex h-16 items-center justify-between gap-2.5 lg:h-[4.25rem]">
             <Link
               to="/"
               onClick={closeMenu}
@@ -221,7 +243,7 @@ export default function HomeHeader() {
       <div
         id="home-mobile-navigation"
         hidden={!mobileOpen}
-        className="fixed inset-x-0 bottom-0 top-[4.25rem] z-40 overflow-y-auto rounded-b-2xl border-t border-[#EAE6DC] bg-white px-5 pb-8 pt-4 shadow-[0_20px_45px_rgba(30,27,22,0.14)] lg:hidden"
+        className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto rounded-b-2xl border-t border-[#EAE6DC] bg-white px-5 pb-8 pt-4 shadow-[0_20px_45px_rgba(30,27,22,0.14)] lg:hidden"
       >
         <nav className="flex flex-col divide-y divide-[#EAE6DC]" aria-label="Mobile navigation">
           {navLinks.map((link) => (

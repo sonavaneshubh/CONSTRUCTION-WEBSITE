@@ -65,7 +65,7 @@ export default function LegalPage({ type }: Props) {
         tag={content.eyebrow}
         title={content.title}
         subtitle={content.intro}
-        image="/images/hero/highway.jpg"
+        image="/images/hero/road-construction.jpg"
       />
 
       <section className="section-pad">

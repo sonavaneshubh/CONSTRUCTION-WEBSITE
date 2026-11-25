@@ -51,12 +51,11 @@ export const projects: Project[] = [
       "Solar-powered highway lighting & retro-reflective signage",
     ],
     status: "Successfully Completed",
-    coverImage:
-      "https://images.unsplash.com/photo-1545459720-aac8509eb02c?w=1200&h=800&fit=crop",
+    coverImage: "/images/hero/road-construction.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1545459720-aac8509eb02c?w=900&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=900&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=900&h=600&fit=crop",
+      "/images/hero/road-construction.jpg",
+      "/images/hero/highway.jpg",
+      "/images/hero/jcb-earthmoving.jpg",
     ],
     featured: true,
     metrics: [
@@ -84,18 +83,48 @@ export const projects: Project[] = [
       "SCADA-integrated flow meters and remote monitoring station",
     ],
     status: "Operational / Handed Over",
-    coverImage:
-      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1200&h=800&fit=crop",
+    coverImage: "/images/hero/water-supply-pipeline.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=900&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&h=600&fit=crop",
+      "/images/hero/water-supply-pipeline.jpg",
+      "/images/hero/water-infrastructure.jpg",
+      "/images/hero/well-excavation.jpg",
     ],
     featured: true,
     metrics: [
       { label: "Pipeline Span", value: "45 Kilometers" },
       { label: "Storage Capacity", value: "3.5 Million Liters" },
       { label: "Beneficiaries", value: "75,000+ Citizens" },
+    ],
+  },
+  {
+    id: "rural-well-development",
+    title: "Rural Well Construction & Water Resource Development",
+    location: "Karjat Taluka, Ahilyanagar District",
+    category: "Water & Utilities",
+    categorySlug: "water",
+    year: "2023",
+    shortDescription:
+      "Community well construction, borehole development and source augmentation for rural water supply schemes.",
+    overview:
+      "A public water resource development programme executed for rural clusters with limited year-round access to safe water. Works included well excavation, structural lining, aquifer-based borehole development, pump installations and a community operated distribution network.",
+    scope: [
+      "Site survey, aquifer assessment & source selection",
+      "Open well excavation, lining & safety parapets",
+      "Borehole drilling, casing development & pump installation",
+      "Water quality testing and commissioning support",
+      "Community training for operation and routine maintenance",
+    ],
+    status: "Handed Over to Local Bodies",
+    coverImage: "/images/hero/well-excavation.jpg",
+    gallery: [
+      "/images/hero/well-excavation.jpg",
+      "/images/hero/water-supply-pipeline.jpg",
+    ],
+    featured: false,
+    metrics: [
+      { label: "Wells Developed", value: "18 Sources" },
+      { label: "Beneficiary Villages", value: "7 Villages" },
+      { label: "Execution Period", value: "9 Months" },
     ],
   },
   {
@@ -117,12 +146,11 @@ export const projects: Project[] = [
       "Energy-efficient curtain wall framing & granite lobby finishes",
     ],
     status: "Completed",
-    coverImage:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop",
+    coverImage: "/images/hero/commercial-building.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&h=600&fit=crop",
+      "/images/hero/commercial-building.jpg",
+      "/images/hero/interior-office.jpg",
+      "/images/hero/tower-cranes.jpg",
     ],
     featured: true,
     metrics: [
@@ -150,11 +178,10 @@ export const projects: Project[] = [
       "All-weather gravel access roads and boundary security walling",
     ],
     status: "Commissioned & Grid-Tied",
-    coverImage:
-      "https://images.unsplash.com/photo-1509391365360-2e959784a276?w=1200&h=800&fit=crop",
+    coverImage: "/images/hero/solar-farm.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1509391365360-2e959784a276?w=900&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1545459720-aac8509eb02c?w=900&h=600&fit=crop",
+      "/images/hero/solar-farm.jpg",
+      "/images/hero/land-development.jpg",
     ],
     featured: true,
     metrics: [
@@ -182,11 +209,10 @@ export const projects: Project[] = [
       "High-tensile crash barriers, drainage spouts & wear course paving",
     ],
     status: "Completed & Commissioned",
-    coverImage:
-      "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=1200&h=800&fit=crop",
+    coverImage: "/images/hero/bridge-construction.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?w=900&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&h=600&fit=crop",
+      "/images/hero/bridge-construction.jpg",
+      "/images/hero/tower-cranes.jpg",
     ],
     featured: false,
     metrics: [
@@ -214,11 +240,10 @@ export const projects: Project[] = [
       "Industrial high-security compound wall and automated toll barriers",
     ],
     status: "Completed",
-    coverImage:
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&h=800&fit=crop",
+    coverImage: "/images/hero/land-development.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=900&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=900&h=600&fit=crop",
+      "/images/hero/jcb-earthmoving.jpg",
+      "/images/hero/highway.jpg",
     ],
     featured: false,
     metrics: [

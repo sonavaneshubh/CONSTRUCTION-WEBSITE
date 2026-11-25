@@ -19,7 +19,7 @@ export default function Projects() {
         tag="Our Portfolio"
         title="Infrastructure Projects"
         subtitle="Explore our delivered highways, bridges, buildings, water systems and renewable energy infrastructure."
-        image="/images/hero/water-infrastructure.jpg"
+        image="/images/hero/bridge-construction.jpg"
       />
 
       <section className="section-surface section-pad">

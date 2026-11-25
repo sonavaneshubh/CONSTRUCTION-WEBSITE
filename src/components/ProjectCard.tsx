@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar, CheckCircle2, MapPin } from "lucide-react";
 import type { Project } from "../data/projects";
+import SiteImage from "./SiteImage";
 
 interface Props {
   project: Project;
@@ -11,16 +12,8 @@ export default function ProjectCard({ project }: Props) {
   return (
     <Link to={`/projects/${project.id}`} className="panel panel-hover group flex h-full flex-col">
       <div className="media-box media-clean media-top media-ratio">
-        <img
-          src={project.coverImage}
-          alt={project.title}
-          loading="lazy"
-          onError={(event) => {
-            (event.target as HTMLImageElement).src =
-              "/images/hero/construction.jpg";
-          }}
-        />
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-white/92 via-white/25 to-white/10" />
+        <SiteImage src={project.coverImage} alt={project.title} loading="lazy" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#17232D]/85 via-transparent to-[#17232D]/15" />
         <div className="absolute left-4 top-4 z-20 flex flex-wrap gap-2">
             <span className="rounded-md bg-gradient-to-r from-[#FFE08A] via-[#FFB800] to-[#E09500] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#242620]">
             {project.category}
@@ -32,8 +25,8 @@ export default function ProjectCard({ project }: Props) {
             </span>
           )}
         </div>
-        <div className="absolute bottom-4 left-5 right-5 z-20 flex items-center gap-2 text-xs font-semibold text-[#242620]">
-          <MapPin size={14} className="shrink-0 text-[#7A5010]" />
+        <div className="absolute bottom-4 left-5 right-5 z-20 flex items-center gap-2 text-xs font-semibold text-white">
+          <MapPin size={14} className="shrink-0 text-[#D6A12B]" />
           <span className="truncate">{project.location}</span>
         </div>
       </div>

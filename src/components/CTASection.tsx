@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, MessageSquare, Phone } from "lucide-react";
 import { company } from "../data/company";
 import ScrollReveal from "./ScrollReveal";
+import SiteImage from "./SiteImage";
 
 interface Props {
   heading?: string;
@@ -14,13 +15,13 @@ export default function CTASection({
 }: Props) {
   return (
     <section className="section-surface relative overflow-hidden bg-[#F6F5F1] py-16 sm:py-20 lg:py-24">
-      <img
-        src="/images/hero/highway.jpg"
+      <SiteImage
+        src="/images/hero/road-construction.jpg"
         alt=""
-        className="absolute inset-0 h-full w-full object-cover opacity-10"
+        className="absolute inset-0 h-full w-full object-cover"
         loading="lazy"
       />
-      <div className="absolute inset-0 bg-white/80" />
+      <div className="absolute inset-0 bg-[#F6F5F1]/88" />
       <div
         className="hero-beam absolute -right-1/4 top-[-30%] z-10 h-[160%] w-1/2 bg-gradient-to-l from-transparent via-[#FFB800]/10 to-transparent blur-3xl"
         aria-hidden="true"

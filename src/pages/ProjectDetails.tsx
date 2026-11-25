@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { projects } from "../data/projects";
 import ScrollReveal from "../components/ScrollReveal";
+import SiteImage from "../components/SiteImage";
 import CTASection from "../components/CTASection";
 import {
   MapPin,
@@ -43,33 +44,25 @@ export default function ProjectDetails() {
 
   return (
     <div className="min-h-screen bg-[#FAFAF8] text-[#4A4F55]">
-      <section className="relative isolate flex min-h-[300px] items-center overflow-hidden bg-[#FAFAF8] py-16 pt-28 text-[#242620] sm:min-h-[360px]">
-        <img
+      <section className="page-banner relative isolate flex min-h-[300px] items-center overflow-hidden bg-[#17232D] py-16 pt-28 text-white sm:min-h-[360px]">
+        <SiteImage
           src={project.coverImage}
           alt=""
-          className="absolute inset-0 h-full w-full object-cover opacity-20"
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = "/images/hero/construction.jpg";
-          }}
+          className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#FAFAF8]/95 via-[#FAFAF8]/80 to-[#FAFAF8]/55" />
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#FAFAF8]/90 via-transparent to-[#FAFAF8]/60" />
-        <div
-          className="hero-beam absolute -right-1/4 top-[-30%] z-10 h-[160%] w-1/2 bg-gradient-to-l from-transparent via-[#FFB800]/10 to-transparent blur-3xl"
-          aria-hidden="true"
-        />
+        <div className="page-banner__overlay absolute inset-0 z-10" aria-hidden="true" />
 
         <div className="site-container relative z-20">
           <ScrollReveal>
             <div className="mx-auto max-w-4xl text-center">
               <span
-                className="eyebrow border-[#B37F00]/25 bg-[#FFB800]/10 text-[#7A5010] hero-stagger"
+                className="eyebrow border-[#D6A12B]/40 bg-[#D6A12B]/15 text-[#F5F3EE] hero-stagger"
                 style={{ animationDelay: "60ms" }}
               >
                 <Tag size={13} />
                 {project.category}
               </span>
-              <h1 className="mt-5 font-heading text-[clamp(2rem,4.2vw,3.4rem)] font-extrabold leading-[1.12] tracking-[-0.04em]">
+              <h1 className="page-banner__title mt-5 font-heading text-[clamp(2rem,4.2vw,3.4rem)] font-extrabold leading-[1.12] tracking-[-0.04em]">
                 <span className="line-mask">
                   <span className="text-line" style={{ animationDelay: "180ms" }}>
                     {project.title}
@@ -77,10 +70,10 @@ export default function ProjectDetails() {
                 </span>
               </h1>
               <p
-                className="hero-stagger mt-4 flex items-center justify-center gap-2 text-sm text-[#4A4F55] sm:text-base"
+                className="hero-stagger mt-4 flex items-center justify-center gap-2 text-sm text-[#F5F3EE]/90 sm:text-base"
                 style={{ animationDelay: "340ms" }}
               >
-                <MapPin size={18} className="shrink-0 text-[#7A5010]" />
+                <MapPin size={18} className="shrink-0 text-[#D6A12B]" />
                 <span>{project.location}</span>
               </p>
               <div className="hero-stagger gold-line mx-auto mt-5" style={{ animationDelay: "460ms" }} />
@@ -251,14 +244,10 @@ export default function ProjectDetails() {
               >
                 {project.gallery.map((image, index) => (
                   <div key={index} className="media-box media-clean media-ratio-wide">
-                    <img
+                    <SiteImage
                       src={image}
                       alt={`${project.title} - View ${index + 1}`}
                       loading="lazy"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src =
-                          "/images/hero/construction.jpg";
-                      }}
                     />
                   </div>
                 ))}

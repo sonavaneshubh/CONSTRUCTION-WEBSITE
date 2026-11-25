@@ -10,9 +10,11 @@ import {
   Route,
   Shovel,
   Sun,
+  Waves,
 } from "lucide-react";
 import PageBanner from "../components/PageBanner";
 import ScrollReveal from "../components/ScrollReveal";
+import SiteImage from "../components/SiteImage";
 import CTASection from "../components/CTASection";
 import { services } from "../data/services";
 
@@ -20,6 +22,7 @@ const iconMap: Record<string, React.ElementType> = {
   "building-2": Building2,
   route: Route,
   droplets: Droplets,
+  waves: Waves,
   landmark: Landmark,
   home: Home,
   sun: Sun,
@@ -34,7 +37,7 @@ export default function Services() {
         tag="Our Expertise"
         title="Construction Services"
         subtitle="End-to-end civil, infrastructure and turnkey solutions for public tenders, private developments and industrial corridors."
-        image="/images/hero/tower-cranes.jpg"
+        image="/images/hero/jcb-earthmoving.jpg"
       />
 
       <section className="section-surface section-pad">
@@ -65,14 +68,10 @@ export default function Services() {
                 <ScrollReveal key={service.id} delay={(index % 3) * 70}>
                   <article id={service.id} className="panel panel-hover flex h-full scroll-mt-28 flex-col">
                     <div className="media-box media-clean media-top media-ratio-wide rounded-none">
-                      <img
+                      <SiteImage
                         src={service.image}
                         alt={service.title}
                         loading="lazy"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src =
-                            "/images/hero/construction.jpg";
-                        }}
                       />
                     </div>
 

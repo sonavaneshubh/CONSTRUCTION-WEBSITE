@@ -243,8 +243,7 @@ export const latestNews = [
     category: "Highways & Roads",
     excerpt:
       "Successfully commissioned a high-density 4-lane concrete corridor with advanced drainage, smart signage, and anti-skid surface treatments.",
-    image:
-      "https://images.unsplash.com/photo-1545459720-aac8509eb02c?w=800&h=500&fit=crop",
+    image: "/images/hero/road-construction.jpg",
   },
   {
     id: "solar-infra-expansion",
@@ -253,8 +252,7 @@ export const latestNews = [
     category: "Renewable Energy",
     excerpt:
       "Combining civil engineering precision with high-efficiency PV arrays to power industrial complexes with clean, reliable solar energy.",
-    image:
-      "https://images.unsplash.com/photo-1509391365360-2e959784a276?w=800&h=500&fit=crop",
+    image: "/images/hero/solar-farm.jpg",
   },
   {
     id: "water-grid-project",
@@ -263,7 +261,6 @@ export const latestNews = [
     category: "Water Systems",
     excerpt:
       "Constructed a state-of-the-art potable water distribution pipeline network ensuring 24/7 pressurized municipal supply.",
-    image:
-      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&h=500&fit=crop",
+    image: "/images/hero/water-supply-pipeline.jpg",
   },
 ];

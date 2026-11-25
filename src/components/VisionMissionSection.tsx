@@ -2,21 +2,20 @@ import { Compass, Target } from "lucide-react";
 import { visionMission } from "../data/company";
 import ScrollReveal from "./ScrollReveal";
 import SectionHeading from "./SectionHeading";
-
-const FALLBACK_IMAGE = "/images/hero/construction.jpg";
+import SiteImage from "./SiteImage";
 
 export default function VisionMissionSection() {
   const items = [
     {
       key: "vision" as const,
       icon: Compass,
-      image: "/images/hero/tower-cranes.jpg",
+      image: "/images/hero/road-construction.jpg",
       label: "Where We Are Going",
     },
     {
       key: "mission" as const,
       icon: Target,
-      image: "/images/hero/commercial-building.jpg",
+      image: "/images/hero/water-supply-pipeline.jpg",
       label: "How We Get There",
     },
   ];
@@ -45,14 +44,7 @@ export default function VisionMissionSection() {
               >
                 <article className="panel panel-hover flex h-full flex-col">
                   <div className="media-box media-clean media-top media-ratio">
-                    <img
-                      src={image}
-                      alt={item.title}
-                      loading="lazy"
-                      onError={(event) => {
-                        (event.target as HTMLImageElement).src = FALLBACK_IMAGE;
-                      }}
-                    />
+                    <SiteImage src={image} alt={item.title} loading="lazy" />
                     <span className="absolute left-5 top-5 z-10 grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-[#FFE08A] via-[#FFB800] to-[#E09500] text-[#242620] shadow-[0_10px_24px_rgba(30,27,22,0.14)]">
                       <Icon size={21} />
                     </span>

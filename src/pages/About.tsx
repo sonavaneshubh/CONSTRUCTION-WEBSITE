@@ -1,6 +1,7 @@
 import PageBanner from "../components/PageBanner";
 import ScrollReveal from "../components/ScrollReveal";
 import VisionMissionSection from "../components/VisionMissionSection";
+import SiteImage from "../components/SiteImage";
 import CTASection from "../components/CTASection";
 import { strengths } from "../data/company";
 import { Award, CheckCircle2, ShieldCheck } from "lucide-react";
@@ -12,21 +13,17 @@ export default function About() {
         tag="Corporate Profile"
         title="About G A Palve and Company"
         subtitle="A trusted civil construction and infrastructure partner for government bodies, municipalities and private developers."
-        image="/images/hero/commercial-building.jpg"
+        image="/images/hero/bridge-construction.jpg"
       />
 
       <section className="section-surface section-pad">
         <div className="site-container relative z-10 grid items-center gap-5 lg:grid-cols-2 lg:gap-6">
           <ScrollReveal direction="right">
             <div className="media-box media-ratio">
-              <img
-                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1100&h=1000&fit=crop"
-                alt="G A Palve and Company civil engineering team"
+              <SiteImage
+                src="/images/hero/jcb-earthmoving.jpg"
+                alt="G A Palve and Company earthmoving and site development work"
                 loading="lazy"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src =
-                    "/images/hero/construction.jpg";
-                }}
               />
               <div className="panel absolute bottom-0 left-0 z-10 m-3 max-w-[15rem] p-4 sm:max-w-[17rem]">
                 <p className="font-heading text-3xl font-extrabold text-[#7A5010]">Since 2014</p>

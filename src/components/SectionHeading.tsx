@@ -19,7 +19,7 @@ function TitleContent({ title, highlight }: { title: string; highlight?: string 
   return (
     <>
       {title.slice(0, index)}
-      <span className="animated-gradient bg-gradient-to-r from-[#704700] via-[#A85E12] to-[#704700] bg-clip-text text-transparent contrast-[1.12] saturate-[1.08]">
+      <span className="text-[#634000]">
         {highlight}
       </span>
       {title.slice(index + highlight.length)}

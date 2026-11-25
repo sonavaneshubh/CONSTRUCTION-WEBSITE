@@ -1,5 +1,6 @@
 import PageBanner from "../components/PageBanner";
 import ScrollReveal from "../components/ScrollReveal";
+import SiteImage from "../components/SiteImage";
 import ContactForm from "../components/ContactForm";
 import { company } from "../data/company";
 import {
@@ -57,7 +58,7 @@ export default function Contact() {
         tag="Get In Touch"
         title="Contact G A Palve and Company"
         subtitle="Share your project requirements with our engineering and tender team. We respond with clear, practical guidance."
-        image="/images/hero/commercial-building.jpg"
+        image="/images/hero/water-supply-pipeline.jpg"
       />
 
       <section className="section-surface section-pad">
@@ -65,14 +66,10 @@ export default function Contact() {
           <div className="min-w-0 lg:col-span-5">
             <ScrollReveal direction="right">
               <div className="media-box media-ratio mb-4">
-                <img
-                  src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1100&h=700&fit=crop"
-                  alt="G A Palve and Company project consultation"
+                <SiteImage
+                  src="/images/hero/land-development.jpg"
+                  alt="Land development and infrastructure site preparation"
                   loading="lazy"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      "/images/hero/construction.jpg";
-                  }}
                 />
                 <div className="panel absolute bottom-0 left-0 z-10 m-4 max-w-[15rem] p-4 sm:max-w-[17rem]">
                   <p className="font-heading text-2xl font-extrabold text-[#7A5010]">

@@ -4,7 +4,7 @@ import HomeServicesStrip from "../components/HomeServicesStrip";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#FAFAF8] text-[#4A4F55]">
+    <div className="home-page min-h-screen bg-[#F5F3EE] text-[#343C43]">
       <HomeHero />
       <HomeAboutSection />
       <HomeServicesStrip />

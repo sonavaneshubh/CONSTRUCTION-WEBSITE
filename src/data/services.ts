@@ -27,8 +27,7 @@ export const services: Service[] = [
       "Industrial flooring & retaining walls",
       "Heavy load-bearing civil structures",
     ],
-    image:
-      "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&h=600&fit=crop",
+    image: "/images/hero/bridge-construction.jpg",
     icon: "building-2",
   },
   {
@@ -45,8 +44,7 @@ export const services: Service[] = [
       "Culverts, cross-drainage & retaining structures",
       "Thermoplastic road marking & safety barriers",
     ],
-    image:
-      "https://images.unsplash.com/photo-1545459720-aac8509eb02c?w=900&h=600&fit=crop",
+    image: "/images/hero/road-construction.jpg",
     icon: "route",
   },
   {
@@ -63,9 +61,25 @@ export const services: Service[] = [
       "Water treatment plants (WTP) & filtration systems",
       "Hydrostatic testing, valve chambers & metering",
     ],
-    image:
-      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=900&h=600&fit=crop",
+    image: "/images/hero/water-supply-pipeline.jpg",
     icon: "droplets",
+  },
+  {
+    id: "well-construction",
+    title: "Well Construction & Water Resources",
+    shortDescription:
+      "Rural and urban well construction, borehole development and complete water resource solutions.",
+    description:
+      "We deliver dependable water resource development through well excavation, borehole construction, pump installation and source augmentation. Our teams work across rural and municipal schemes to create long-lasting access to safe water.",
+    capabilities: [
+      "Open well & borewell construction",
+      "Aquifer assessment & source development",
+      "Well lining, disposal & pump installation",
+      "Rural water supply scheme execution",
+      "Water quality testing & commissioning support",
+    ],
+    image: "/images/hero/well-excavation.jpg",
+    icon: "waves",
   },
   {
     id: "pwd-government-contracting",
@@ -81,8 +95,7 @@ export const services: Service[] = [
       "Irrigation, canal lining & flood control structures",
       "Complete technical documentation & statutory audits",
     ],
-    image:
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&h=600&fit=crop",
+    image: "/images/hero/tower-cranes.jpg",
     icon: "landmark",
   },
   {
@@ -99,8 +112,7 @@ export const services: Service[] = [
       "Underground basements & automated parking levels",
       "High-durability facade & weatherproofing systems",
     ],
-    image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&h=600&fit=crop",
+    image: "/images/hero/commercial-building.jpg",
     icon: "home",
   },
   {
@@ -117,8 +129,7 @@ export const services: Service[] = [
       "Inverter stations, transformers & grid-tie integration",
       "Operation & maintenance (O&M) and performance monitoring",
     ],
-    image:
-      "https://images.unsplash.com/photo-1509391365360-2e959784a276?w=900&h=600&fit=crop",
+    image: "/images/hero/solar-farm.jpg",
     icon: "sun",
   },
   {
@@ -135,8 +146,7 @@ export const services: Service[] = [
       "Compound walls, security fencing & entrance gates",
       "Underground utility corridors for water, power & telecom",
     ],
-    image:
-      "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=900&h=600&fit=crop",
+    image: "/images/hero/jcb-earthmoving.jpg",
     icon: "shovel",
   },
   {
@@ -153,8 +163,7 @@ export const services: Service[] = [
       "Electrical, networking, HVAC & lighting integration",
       "Premium flooring, glass partitions & finishing",
     ],
-    image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&h=600&fit=crop",
+    image: "/images/hero/interior-office.jpg",
     icon: "palette",
   },
 ];

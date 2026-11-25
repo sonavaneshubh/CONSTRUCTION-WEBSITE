@@ -61,17 +61,17 @@ export default function Footer() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 py-12 sm:px-8 lg:px-12 lg:py-16 xl:px-16">
-        <div className="grid grid-cols-1 gap-9 border-b border-[#EAE6DC] pb-10 md:grid-cols-2 lg:grid-cols-4">
+      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 py-8 sm:px-8 lg:px-12 lg:py-10 xl:px-16">
+        <div className="grid grid-cols-1 gap-6 border-b border-[#EAE6DC] pb-6 md:grid-cols-2 lg:grid-cols-4">
           <section aria-labelledby="footer-company" className="hero-stagger" style={{ animationDelay: "60ms" }}>
             <h2
               id="footer-company"
-              className="mb-5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
             >
               Company
             </h2>
             <Link to="/" className="flex items-center gap-3" aria-label={`${company.name} Home`}>
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-white p-1.5 shadow-sm ring-1 ring-[#EAE6DC]">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-white p-1.5 shadow-sm ring-1 ring-[#EAE6DC]">
                 <img src={HOME_LOGO_SRC} alt="" className="h-full w-full object-contain" />
               </span>
               <span className="min-w-0">
@@ -88,17 +88,17 @@ export default function Footer() {
                 </span>
               </span>
             </Link>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#666C73]">
+            <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-[#666C73]">
               Delivering dependable construction and infrastructure solutions with
               quality workmanship and accountable delivery.
             </p>
-            <div className="mt-5 flex items-center gap-2">
+            <div className="mt-3 flex items-center gap-2">
               {socialLinks.map(({ label, href, icon: Icon }) => (
                 <a
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="grid h-9 w-9 place-items-center rounded-full border border-[#EAE6DC] bg-white text-[#7A5010] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620]"
+                  className="grid h-8 w-8 place-items-center rounded-full border border-[#EAE6DC] bg-white text-[#7A5010] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620]"
                 >
                   <Icon size={16} aria-hidden="true" />
                 </a>
@@ -109,11 +109,11 @@ export default function Footer() {
           <section aria-labelledby="footer-links" className="hero-stagger" style={{ animationDelay: "140ms" }}>
             <h2
               id="footer-links"
-              className="mb-5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
             >
               Quick Links
             </h2>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-2 text-[13px]">
               {quickLinks.map((link) => (
                 <li key={link.path}>
                   <Link
@@ -130,11 +130,11 @@ export default function Footer() {
           <section aria-labelledby="footer-services" className="hero-stagger" style={{ animationDelay: "220ms" }}>
             <h2
               id="footer-services"
-              className="mb-5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
             >
               Our Services
             </h2>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-2 text-[13px]">
               {footerServices.map((service) => (
                 <li key={service.path}>
                   <Link
@@ -151,14 +151,14 @@ export default function Footer() {
           <section aria-labelledby="footer-contact" className="hero-stagger" style={{ animationDelay: "300ms" }}>
             <h2
               id="footer-contact"
-              className="mb-5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
             >
               Contact Information
             </h2>
             <address className="not-italic">
-              <ul className="space-y-4 text-sm leading-relaxed text-[#666C73]">
-                <li className="flex items-start gap-3">
-                  <MapPin size={17} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
+              <ul className="space-y-2 text-[13px] leading-snug text-[#666C73]">
+                <li className="flex items-start gap-2">
+                  <MapPin size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
                   <a
                     href={company.maps.directionsUrl}
                     target="_blank"
@@ -168,8 +168,8 @@ export default function Footer() {
                     {company.address}
                   </a>
                 </li>
-                <li className="flex items-start gap-3">
-                  <Phone size={17} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
+                <li className="flex items-start gap-2">
+                  <Phone size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
                   <a
                     href={`tel:${company.phone.replace(/\s/g, "")}`}
                     className="break-words transition-colors hover:text-[#242620]"
@@ -177,8 +177,8 @@ export default function Footer() {
                     {company.phone}
                   </a>
                 </li>
-                <li className="flex items-start gap-3">
-                  <Mail size={17} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
+                <li className="flex items-start gap-2">
+                  <Mail size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
                   <a
                     href={`mailto:${company.email}`}
                     className="break-all transition-colors hover:text-[#242620]"
@@ -186,8 +186,8 @@ export default function Footer() {
                     {company.email}
                   </a>
                 </li>
-                <li className="flex items-start gap-3">
-                  <Clock size={17} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
+                <li className="flex items-start gap-2">
+                  <Clock size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
                   <span>{company.businessHours}</span>
                 </li>
               </ul>
@@ -195,9 +195,21 @@ export default function Footer() {
           </section>
         </div>
 
-        <div className="flex flex-col gap-4 pt-6 text-xs text-[#666C73] sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative z-20 flex justify-center">
+          <button
+            type="button"
+            onClick={scrollToTop}
+            className="-mt-6 inline-flex items-center gap-2 rounded-full border border-[#B37F00]/40 bg-white px-4 py-1.5 text-xs font-bold text-[#7A5010] shadow-[0_8px_20px_rgba(30,27,22,0.08)] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B37F00]"
+            aria-label="Back to top"
+          >
+            <ArrowUp size={14} aria-hidden="true" />
+            Back to Top
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-3 pt-3 text-xs text-[#666C73] sm:flex-row sm:items-center sm:justify-between">
           <p>© {currentYear} {company.name}. All rights reserved.</p>
-          <nav className="flex flex-wrap items-center gap-x-5 gap-y-2" aria-label="Legal navigation">
+            <nav className="flex flex-wrap items-center gap-x-3 gap-y-1" aria-label="Legal navigation">
             <Link to="/privacy-policy" className="transition-colors hover:text-[#7A5010]">
               Privacy Policy
             </Link>
@@ -211,7 +223,7 @@ export default function Footer() {
           <button
             type="button"
             onClick={scrollToTop}
-            className="btn-shine inline-flex items-center gap-2 self-start rounded-lg border border-[#B37F00]/40 bg-white px-4 py-2 font-bold text-[#7A5010] transition-colors hover:bg-[#FFB800] hover:text-[#242620] sm:self-auto"
+            className="btn-shine inline-flex items-center gap-2 self-start rounded-lg border border-[#B37F00]/40 bg-white px-4 py-1.5 font-bold text-[#7A5010] transition-colors hover:bg-[#FFB800] hover:text-[#242620] sm:self-auto"
             aria-label="Back to top"
           >
             <ArrowUp size={14} aria-hidden="true" />
