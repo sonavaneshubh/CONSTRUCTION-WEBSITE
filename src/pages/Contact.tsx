@@ -12,6 +12,7 @@ import {
   Phone,
   type LucideIcon,
 } from "lucide-react";
+import { usePageMeta } from "../hooks/usePageMeta";
 
 interface PhoneDetail {
   label: string;
@@ -30,6 +31,13 @@ interface ContactDetail {
 const telHref = (number: string) => `tel:${number.replace(/\s/g, "")}`;
 
 export default function Contact() {
+  usePageMeta({
+    title: "Contact Us",
+    description:
+      "Contact G A Palve and Company for civil infrastructure enquiries in Maharashtra. Call, email, message on WhatsApp or visit our office in Alsunde.",
+    path: "/contact",
+  });
+
   const whatsappUrl = `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(
     company.whatsappMessage
   )}`;

@@ -167,7 +167,7 @@ export const projects: Project[] = [
     categorySlug: "solar",
     year: "2024",
     shortDescription:
-      "Turnkey civil and structural EPC for 15 MW solar PV generation facility including pile foundations and 33 kV substation.",
+      "Civil and structural works for a 15 MW solar PV generation facility, including pile foundations and a 33 kV substation.",
     overview:
       "Executed the civil engineering and mounting infrastructure package for a 15 MW utility-scale solar park. The works encompassed land grading across 60 acres, 8,200 driven steel piles, galvanized module mounting structure erection, inverter substations, and internal access road network.",
     scope: [

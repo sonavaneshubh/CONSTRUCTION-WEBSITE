@@ -19,7 +19,7 @@ export const services: Service[] = [
     shortDescription:
       "Heavy civil engineering, structural foundations, bridges, and RCC frameworks engineered for maximum load resilience.",
     description:
-      "We provide end-to-end civil construction solutions for public, commercial, and industrial infrastructure. Our seasoned civil engineers ensure structural precision, high-grade steel and concrete reinforcement, and strict adherence to structural safety standards from excavation to roof slab completion.",
+      "We provide civil construction services for public, commercial, and industrial infrastructure. Our seasoned civil engineers ensure structural precision, high-grade steel and concrete reinforcement, and strict adherence to structural safety standards from excavation to roof slab completion.",
     capabilities: [
       "Deep foundation & piling works",
       "Reinforced cement concrete (RCC) frameworks",

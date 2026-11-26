@@ -4,8 +4,16 @@ import ProjectCard from "../components/ProjectCard";
 import CTASection from "../components/CTASection";
 import PageIntro from "../components/PageIntro";
 import { projects, projectCategories } from "../data/projects";
+import { usePageMeta } from "../hooks/usePageMeta";
 
 export default function Projects() {
+  usePageMeta({
+    title: "Our Projects",
+    description:
+      "Browse completed and ongoing infrastructure projects by G A Palve and Company across roads, water systems, civil works, bridges and solar energy.",
+    path: "/projects",
+  });
+
   const [activeFilter, setActiveFilter] = useState("all");
 
   const filteredProjects =

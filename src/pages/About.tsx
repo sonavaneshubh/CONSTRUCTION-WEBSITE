@@ -12,8 +12,16 @@ import {
   WhyChooseUsSection,
 } from "../components/AboutPageSections";
 import { Building2, Droplets, Route } from "lucide-react";
+import { usePageMeta } from "../hooks/usePageMeta";
 
 export default function About() {
+  usePageMeta({
+    title: "About Us",
+    description:
+      "Learn about G A Palve and Company: our story, founding values, certifications and approach to responsible civil infrastructure delivery in Maharashtra.",
+    path: "/about",
+  });
+
   return (
     <div className="interior-page about-page">
       <PageIntro
