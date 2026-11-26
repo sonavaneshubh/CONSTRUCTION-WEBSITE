@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import ScrollReveal from "../components/ScrollReveal";
 import ProjectCard from "../components/ProjectCard";
 import CTASection from "../components/CTASection";
@@ -14,7 +14,17 @@ export default function Projects() {
     path: "/projects",
   });
 
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedCategory = searchParams.get("category") ?? "all";
+  const activeFilter = projectCategories.some(
+    (category) => category.slug === requestedCategory,
+  )
+    ? requestedCategory
+    : "all";
+
+  const selectCategory = (slug: string) => {
+    setSearchParams(slug === "all" ? {} : { category: slug });
+  };
 
   const filteredProjects =
     activeFilter === "all"
@@ -43,7 +53,7 @@ export default function Projects() {
                 <button
                   key={category.slug}
                   type="button"
-                  onClick={() => setActiveFilter(category.slug)}
+                  onClick={() => selectCategory(category.slug)}
                   aria-pressed={activeFilter === category.slug}
                   className={`shrink-0 rounded-lg px-4 py-2.5 text-xs font-bold transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#17232D] ${
                     activeFilter === category.slug
@@ -70,7 +80,7 @@ export default function Projects() {
               <p className="text-[#4A4F55]">No projects found in this category.</p>
               <button
                 type="button"
-                onClick={() => setActiveFilter("all")}
+                onClick={() => selectCategory("all")}
                 className="btn btn-primary mt-4"
               >
                 View All Projects

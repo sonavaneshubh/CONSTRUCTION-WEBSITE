@@ -28,6 +28,15 @@ const serviceMenu = [
   { label: "Interior Design", id: "interior-design" },
 ];
 
+const projectMenu = [
+  { label: "All Projects", slug: "all" },
+  { label: "Highways & Roads", slug: "roads" },
+  { label: "Civil & Infrastructure", slug: "civil" },
+  { label: "Buildings & Towers", slug: "buildings" },
+  { label: "Water & Utilities", slug: "water" },
+  { label: "Solar & Clean Energy", slug: "solar" },
+];
+
 export default function HomeHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [logoFailed, setLogoFailed] = useState(false);
@@ -194,7 +203,44 @@ export default function HomeHeader() {
                 </div>
               </div>
 
-              {navLinks.slice(3).map((link) => (
+              <div className="group relative">
+                <div className="flex items-center">
+                  <NavLink
+                    to="/projects"
+                    className={({ isActive }) => desktopLinkClass(isActive)}
+                  >
+                    {({ isActive }) => (
+                      <>
+                        Projects
+                        {isActiveLink(isActive) && (
+                          <span
+                            className="absolute inset-x-2 -bottom-0.5 h-[3px] rounded-full bg-[#FFB800]"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                  <ChevronDown
+                    size={14}
+                    className="ml-0.5 shrink-0 text-[#CBC8BE] transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"
+                    aria-hidden="true"
+                  />
+                </div>
+                <div className="pointer-events-none absolute left-1/2 top-full z-50 w-60 -translate-x-1/2 translate-y-1 rounded-xl border border-[#EAE6DC] bg-white p-2 opacity-0 shadow-[0_20px_45px_rgba(30,27,22,0.12)] transition duration-300 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                  {projectMenu.map((item) => (
+                    <Link
+                      key={item.slug}
+                      to={item.slug === "all" ? "/projects" : `/projects?category=${item.slug}`}
+                      className="block rounded-lg px-3 py-2 text-xs font-semibold text-[#4A4F55] transition-colors hover:bg-[#F6F5F1] hover:text-[#7A5010]"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {navLinks.slice(4).map((link) => (
                 <NavLink
                   key={link.path}
                   to={link.path}
@@ -294,6 +340,20 @@ export default function HomeHeader() {
                     <Link
                       key={item.id}
                       to={`/services#${item.id}`}
+                      onClick={closeMenu}
+                      className="flex min-h-11 items-center text-sm font-semibold text-[#4A4F55] transition-colors hover:text-[#7A5010]"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              {link.path === "/projects" && (
+                <div className="mb-3 ml-4 grid gap-1 border-l border-[#FFB800]/40 pl-4">
+                  {projectMenu.map((item) => (
+                    <Link
+                      key={item.slug}
+                      to={item.slug === "all" ? "/projects" : `/projects?category=${item.slug}`}
                       onClick={closeMenu}
                       className="flex min-h-11 items-center text-sm font-semibold text-[#4A4F55] transition-colors hover:text-[#7A5010]"
                     >
