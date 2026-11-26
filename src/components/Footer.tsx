@@ -77,16 +77,16 @@ export default function Footer() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 py-6 sm:px-8 lg:px-12 lg:py-8 xl:px-16">
-        <div className="grid grid-cols-2 gap-4 border-b border-[#EAE6DC] pb-4 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 pb-5 pt-7 sm:px-8 lg:px-12 lg:pb-6 lg:pt-7 xl:px-16">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-3 border-b border-[#EAE6DC] pb-3 sm:gap-x-5 sm:gap-y-3 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-3">
           <section aria-labelledby="footer-company" className="hero-stagger col-span-2 lg:col-span-1" style={{ animationDelay: "60ms" }}>
             <h2
               id="footer-company"
-              className="mb-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
             >
               Company
             </h2>
-            <Link to="/" className="flex items-center gap-3" aria-label={`${company.name} Home`}>
+            <Link to="/" className="flex items-center gap-2.5" aria-label={`${company.name} Home`}>
               <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-white p-1.5 shadow-sm ring-1 ring-[#EAE6DC]">
                 <img src={HOME_LOGO_SRC} alt="" className="h-full w-full object-contain" />
               </span>
@@ -99,17 +99,17 @@ export default function Footer() {
                 >
                   G.A. Palve &amp; Company
                 </span>
-                <span className="mt-1 block text-[9px] font-bold uppercase tracking-[0.18em] text-[#7A5010]">
+                <span className="mt-0.5 block text-[9px] font-bold uppercase tracking-[0.18em] text-[#7A5010]">
                   Quality Construction, Trusted Service
                 </span>
               </span>
             </Link>
-            <p className="mt-2 max-w-xs text-[12px] leading-snug text-[#666C73] sm:text-[13px]">
+            <p className="mt-1.5 max-w-xs text-[12px] leading-tight text-[#666C73] sm:text-[13px] lg:line-clamp-3">
               Delivering dependable construction and infrastructure solutions with
               quality workmanship and accountable delivery.
             </p>
             {socialLinks.length > 0 && (
-              <div className="mt-2 flex items-center gap-2">
+              <div className="mt-1.5 flex items-center gap-2">
                 {socialLinks.map(({ label, href, icon: Icon }) => (
                   <a
                     key={label}
@@ -117,7 +117,7 @@ export default function Footer() {
                     aria-label={label}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="grid h-11 w-11 place-items-center rounded-full border border-[#EAE6DC] bg-white text-[#7A5010] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620]"
+                    className="grid h-9 w-9 place-items-center rounded-full border border-[#EAE6DC] bg-white text-[#7A5010] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620]"
                   >
                     <Icon size={16} aria-hidden="true" />
                   </a>
@@ -129,16 +129,16 @@ export default function Footer() {
           <section aria-labelledby="footer-links" className="hero-stagger" style={{ animationDelay: "140ms" }}>
             <h2
               id="footer-links"
-              className="mb-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
             >
               Quick Links
             </h2>
-            <ul className="space-y-1 text-[12px] sm:text-[13px]">
+            <ul className="flex flex-col gap-3 text-[12px] leading-tight sm:text-[13px]">
               {quickLinks.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="inline-flex min-h-10 items-center transition-colors hover:text-[#7A5010] lg:min-h-11"
+                    className="relative inline-flex min-h-5 items-center leading-tight transition-colors hover:text-[#7A5010] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {link.label}
                   </Link>
@@ -150,16 +150,16 @@ export default function Footer() {
           <section aria-labelledby="footer-services" className="hero-stagger" style={{ animationDelay: "220ms" }}>
             <h2
               id="footer-services"
-              className="mb-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
             >
               Our Services
             </h2>
-            <ul className="space-y-1 text-[12px] sm:text-[13px]">
+            <ul className="flex flex-col gap-3 text-[12px] leading-tight sm:text-[13px]">
               {footerServices.map((service) => (
                 <li key={service.path}>
                   <Link
                     to={service.path}
-                    className="flex min-h-10 items-center transition-colors hover:text-[#7A5010] lg:min-h-11"
+                    className="relative flex min-h-5 items-center leading-tight transition-colors hover:text-[#7A5010] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {service.label}
                   </Link>
@@ -171,19 +171,19 @@ export default function Footer() {
           <section aria-labelledby="footer-contact" className="hero-stagger col-span-2 lg:col-span-1" style={{ animationDelay: "300ms" }}>
             <h2
               id="footer-contact"
-              className="mb-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
             >
               Contact Information
             </h2>
             <address className="not-italic">
-              <ul className="space-y-1 text-[12px] leading-snug text-[#666C73] sm:text-[13px] lg:space-y-2">
+              <ul className="flex flex-col gap-4 text-[12px] leading-tight text-[#666C73] sm:text-[13px]">
                 <li className="flex items-start gap-2">
                   <MapPin size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
                   <a
                     href={company.maps.directionsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-10 items-center break-words transition-colors hover:text-[#242620] lg:min-h-11"
+                    className="relative inline-flex min-h-5 items-center break-words leading-tight transition-colors hover:text-[#242620] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {company.address}
                   </a>
@@ -192,7 +192,7 @@ export default function Footer() {
                   <Phone size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
                   <a
                     href={`tel:${company.phone.replace(/\s/g, "")}`}
-                    className="inline-flex min-h-10 items-center break-words transition-colors hover:text-[#242620] lg:min-h-11"
+                    className="relative inline-flex min-h-5 items-center break-words leading-tight transition-colors hover:text-[#242620] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {company.phone}
                   </a>
@@ -201,7 +201,7 @@ export default function Footer() {
                   <Mail size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
                   <a
                     href={`mailto:${company.email}`}
-                    className="inline-flex min-h-10 items-center break-all transition-colors hover:text-[#242620] lg:min-h-11"
+                    className="relative inline-flex min-h-5 items-center break-all leading-tight transition-colors hover:text-[#242620] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {company.email}
                   </a>
@@ -223,7 +223,7 @@ export default function Footer() {
           <button
             type="button"
             onClick={scrollToTop}
-            className="-mt-5 inline-flex min-h-10 items-center gap-2 rounded-full border border-[#B37F00]/40 bg-white px-4 text-xs font-bold text-[#7A5010] shadow-[0_8px_20px_rgba(30,27,22,0.08)] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B37F00] lg:min-h-11 lg:px-5"
+            className="-mt-6 inline-flex min-h-8 items-center gap-2 rounded-full border border-[#B37F00]/40 bg-white px-4 text-xs font-bold text-[#7A5010] shadow-[0_8px_20px_rgba(30,27,22,0.08)] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B37F00]"
             aria-label="Back to top"
           >
             <ArrowUp size={14} aria-hidden="true" />
@@ -231,16 +231,16 @@ export default function Footer() {
           </button>
         </div>
 
-        <div className="flex flex-col gap-2 pt-2 text-xs text-[#666C73] sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-1 pt-1 text-xs leading-tight text-[#666C73] sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <p>© {currentYear} {company.name}. All rights reserved.</p>
           <nav className="flex flex-wrap items-center gap-x-3 gap-y-1" aria-label="Legal navigation">
-              <Link to="/privacy-policy" className="inline-flex min-h-10 items-center transition-colors hover:text-[#7A5010] lg:min-h-11">
+            <Link to="/privacy-policy" className="relative inline-flex min-h-5 items-center leading-tight transition-colors hover:text-[#7A5010] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']">
               Privacy Policy
             </Link>
             <span className="text-[#D8D2C6]" aria-hidden="true">
               |
             </span>
-              <Link to="/terms-conditions" className="inline-flex min-h-10 items-center transition-colors hover:text-[#7A5010] lg:min-h-11">
+              <Link to="/terms-conditions" className="relative inline-flex min-h-5 items-center leading-tight transition-colors hover:text-[#7A5010] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']">
               Terms &amp; Conditions
             </Link>
           </nav>

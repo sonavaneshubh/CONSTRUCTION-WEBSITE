@@ -85,7 +85,7 @@ export const services: Service[] = [
     id: "pwd-government-contracting",
     title: "PWD & Government Contracting",
     shortDescription:
-      "Registered turnkey contractor for public works departments, municipal bodies, and state infrastructure boards.",
+      "Registered contractor for public works departments, municipal bodies, and state infrastructure boards.",
     description:
       "As an approved and registered government contractor, G A Palve and Company delivers tender-based infrastructure projects with full compliance to PWD standards. We provide transparent billing, rigorous material certification, time-bound delivery, and milestone verification required by public authorities.",
     capabilities: [
@@ -102,7 +102,7 @@ export const services: Service[] = [
     id: "building-construction",
     title: "Residential & Commercial Building Construction",
     shortDescription:
-      "Turnkey construction of multi-story towers, corporate offices, institutional complexes, and gated townships.",
+      "Construction of multi-story towers, corporate offices, institutional complexes, and gated townships.",
     description:
       "We combine architectural ingenuity with modern construction management to deliver state-of-the-art multi-story complexes. Our integrated approach covers foundation geotechnical engineering, superstructures, MEP (mechanical, electrical, plumbing) coordination, and premium architectural finishing.",
     capabilities: [
@@ -157,7 +157,7 @@ export const services: Service[] = [
     description:
       "Complementing our structural capability with high-precision interior fit-outs. We design and deliver sophisticated corporate offices, executive suites, conference halls, and retail spaces featuring modern ergonomics, acoustic ceilings, customized joinery, and energy-efficient lighting.",
     capabilities: [
-      "Corporate workspace design & turnkey fit-outs",
+      "Corporate workspace design & fit-outs",
       "Custom architectural woodwork & cabinetry",
       "Acoustic wall panelling & suspended ceiling systems",
       "Electrical, networking, HVAC & lighting integration",

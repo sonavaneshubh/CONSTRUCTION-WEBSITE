@@ -513,7 +513,7 @@ export default function HomeHero() {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/25 pt-5 lg:mt-6">
+        <div className="mt-8 hidden border-t border-white/25 pt-5 min-[769px]:block lg:mt-6">
           <ul className="grid grid-cols-2 gap-y-3 sm:grid-cols-4 xl:grid-cols-7 xl:gap-y-0">
             {serviceCategories.map(({ label, icon: Icon }, index) => (
               <li
