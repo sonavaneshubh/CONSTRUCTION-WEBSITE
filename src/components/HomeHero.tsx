@@ -21,6 +21,7 @@ import SiteImage from "./SiteImage";
 interface HeroSlide {
   id: string;
   image: string;
+  mobileImage: string;
   alt: string;
 }
 
@@ -28,31 +29,37 @@ const slides: HeroSlide[] = [
   {
     id: "water-supply-pipeline",
     image: "/images/hero/water-supply-pipeline.jpg",
+    mobileImage: "/images/hero/hero-mobile-water-pipeline-sm.jpg",
     alt: "Underground water supply pipeline installation for a municipal network",
   },
   {
     id: "road-construction",
     image: "/images/hero/road-construction.jpg",
+    mobileImage: "/images/hero/hero-mobile-road-construction-sm.jpg",
     alt: "Road construction with asphalt paving machinery and rollers on a highway project",
   },
   {
     id: "jcb-earthmoving",
     image: "/images/hero/jcb-earthmoving.jpg",
+    mobileImage: "/images/hero/hero-mobile-excavator-sm.jpg",
     alt: "JCB excavator carrying out bulk earthmoving and land leveling",
   },
   {
     id: "well-excavation",
     image: "/images/hero/well-excavation.jpg",
+    mobileImage: "/images/hero/hero-mobile-well-excavation-sm.jpg",
     alt: "Well construction and rural water resource development excavation",
   },
   {
     id: "bridge-construction",
     image: "/images/hero/bridge-construction.jpg",
+    mobileImage: "/images/hero/hero-mobile-bridge-construction-sm.jpg",
     alt: "Reinforced concrete bridge construction for highway infrastructure",
   },
   {
     id: "solar-land",
     image: "/images/hero/solar-farm.jpg",
+    mobileImage: "/images/hero/hero-mobile-solar-farm-sm.jpg",
     alt: "Ground-mounted solar farm developed on prepared land",
   },
 ];
@@ -99,7 +106,9 @@ const snapshotStats = [
 const easeOutCubic = (progress: number) => 1 - Math.pow(1 - progress, 3);
 
 const prefersReducedMotion = () =>
-  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  typeof window !== "undefined" &&
+  typeof window.matchMedia === "function" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const ProjectSnapshot = memo(function ProjectSnapshot() {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -119,6 +128,12 @@ const ProjectSnapshot = memo(function ProjectSnapshot() {
     };
 
     if (prefersReducedMotion()) {
+      hasStartedRef.current = true;
+      setValues(1);
+      return;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
       hasStartedRef.current = true;
       setValues(1);
       return;
@@ -211,6 +226,8 @@ export default function HomeHero() {
   const [direction, setDirection] = useState<1 | -1>(1);
   const [phase, setPhase] = useState<Phase>("idle");
   const [documentHidden, setDocumentHidden] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
   const [introZoom, setIntroZoom] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(
     () =>
@@ -220,7 +237,9 @@ export default function HomeHero() {
   );
 
   const currentRef = useRef(0);
+  const incomingRef = useRef<number | null>(null);
   const animatingRef = useRef(false);
+  const transitionStartedRef = useRef(false);
   const transitionCountRef = useRef(0);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const timersRef = useRef<{
@@ -262,6 +281,28 @@ export default function HomeHero() {
     };
   }, []);
 
+  const startTransition = useCallback((index: number) => {
+    if (incomingRef.current !== index || transitionStartedRef.current) return;
+    transitionStartedRef.current = true;
+
+    const timers = timersRef.current;
+    const first = requestAnimationFrame(() => {
+      const second = requestAnimationFrame(() => setPhase("animate"));
+      timers.frames.push(second);
+    });
+    timers.frames.push(first);
+
+    timers.timeout = setTimeout(() => {
+      currentRef.current = index;
+      incomingRef.current = null;
+      setCurrent(index);
+      setIncoming(null);
+      setPhase("idle");
+      animatingRef.current = false;
+      transitionStartedRef.current = false;
+    }, 820);
+  }, []);
+
   const changeTo = useCallback(
     (index: number, forcedDirection?: 1 | -1) => {
       if (animatingRef.current || index === currentRef.current) return;
@@ -282,43 +323,50 @@ export default function HomeHero() {
       }
 
       animatingRef.current = true;
+      incomingRef.current = index;
+      transitionStartedRef.current = false;
       setDirection(nextDirection);
       setIncoming(index);
       setPhase("prepare");
-
-      const first = requestAnimationFrame(() => {
-        const second = requestAnimationFrame(() => setPhase("animate"));
-        timers.frames.push(second);
-      });
-      timers.frames.push(first);
-
-      timers.timeout = setTimeout(() => {
-        currentRef.current = index;
-        setCurrent(index);
-        setIncoming(null);
-        setPhase("idle");
-        animatingRef.current = false;
-      }, 820);
     },
     [prefersReducedMotion],
   );
 
   useEffect(() => {
-    if (prefersReducedMotion || documentHidden || incoming !== null) return;
+    if (prefersReducedMotion || documentHidden || paused || incoming !== null) return;
     const id = setTimeout(() => {
       changeTo((currentRef.current + 1) % slides.length);
     }, 5500);
     return () => clearTimeout(id);
-  }, [changeTo, current, documentHidden, incoming, prefersReducedMotion]);
+  }, [changeTo, current, documentHidden, incoming, paused, prefersReducedMotion]);
 
-  const next = () => changeTo((currentRef.current + 1) % slides.length, 1);
-  const previous = () =>
-    changeTo((currentRef.current - 1 + slides.length) % slides.length, -1);
+  const announceSlide = (index: number) => {
+    setAnnouncement(`Slide ${index + 1} of ${slides.length}: ${slides[index].alt}`);
+  };
+
+  const next = () => {
+    const index = (currentRef.current + 1) % slides.length;
+    announceSlide(index);
+    changeTo(index, 1);
+  };
+
+  const previous = () => {
+    const index = (currentRef.current - 1 + slides.length) % slides.length;
+    announceSlide(index);
+    changeTo(index, -1);
+  };
 
   return (
     <section
       id="home"
       className="home-hero relative isolate min-h-[100svh] overflow-hidden bg-[#17232D] text-white"
+      aria-roledescription="carousel"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setPaused(false);
+      }}
       onTouchStart={(event) => {
         const touch = event.changedTouches[0];
         if (touch) touchStartRef.current = { x: touch.clientX, y: touch.clientY };
@@ -336,6 +384,10 @@ export default function HomeHero() {
       }}
       aria-label="Construction infrastructure slideshow"
     >
+      <p className="sr-only" aria-live="polite" aria-atomic="true">
+        {announcement}
+      </p>
+
       <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
         {slides.map((slide, index) => {
           const isActive = index === current;
@@ -371,26 +423,29 @@ export default function HomeHero() {
                 zIndex: isIncoming ? 20 : isActive ? 10 : 0,
               }}
             >
-              <SiteImage
-                src={slide.image}
-                alt={slide.alt}
-                className={`home-hero__image home-hero__image--${slide.id} h-full w-full object-cover object-center`}
-                style={{
-                  transform: isIncoming
-                    ? phase === "animate"
-                      ? "scale(1.1)"
-                      : "scale(1.02)"
-                    : isActive
-                      ? isTransitioning
+              {(isActive || isIncoming) && (
+                <SiteImage
+                  src={slide.image}
+                  mobileSrc={slide.mobileImage}
+                  alt={slide.alt}
+                  className={`home-hero__image home-hero__image--${slide.id} h-full w-full object-cover object-center`}
+                  style={{
+                    transform: isIncoming
+                      ? phase === "animate"
+                        ? "scale(1.1)"
+                        : "scale(1.02)"
+                      : isTransitioning
                         ? "scale(1.12)"
                         : index === 0 && !introZoom
                           ? "scale(1.02)"
-                          : "scale(1.1)"
-                      : "scale(1.02)",
-                }}
-                loading="eager"
-                fetchPriority={index === 0 ? "high" : undefined}
-              />
+                          : "scale(1.1)",
+                  }}
+                  loading="eager"
+                  fetchPriority={isActive ? "high" : undefined}
+                  onLoad={() => startTransition(index)}
+                  onError={() => startTransition(index)}
+                />
+              )}
             </div>
           );
         })}
@@ -458,12 +513,12 @@ export default function HomeHero() {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/25 pt-5 lg:mt-6">
+        <div className="mt-8 hidden border-t border-white/25 pt-5 min-[769px]:block lg:mt-6">
           <ul className="grid grid-cols-2 gap-y-3 sm:grid-cols-4 xl:grid-cols-7 xl:gap-y-0">
             {serviceCategories.map(({ label, icon: Icon }, index) => (
               <li
                 key={label}
-                className={`flex min-w-0 items-center gap-2 whitespace-nowrap text-[10px] font-semibold leading-tight text-white/90 sm:text-[11px] xl:justify-center xl:px-2 ${
+                className={`flex min-w-0 min-h-10 items-center gap-2 text-[10px] font-semibold leading-tight text-white/95 sm:text-[11px] xl:justify-center xl:px-2 ${
                   index > 0 ? "xl:border-l xl:border-white/20" : ""
                 }`}
               >
@@ -493,7 +548,7 @@ export default function HomeHero() {
           type="button"
           onClick={previous}
           aria-label="Previous slide"
-          className="pointer-events-auto grid h-9 w-9 place-items-center rounded-full border border-white/30 bg-[#17232D]/15 text-white/40 opacity-60 backdrop-blur-[1px] transition-all hover:border-white/60 hover:bg-[#17232D]/40 hover:text-white hover:opacity-100 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D6A12B] sm:h-10 sm:w-10"
+          className="pointer-events-auto grid h-11 w-11 place-items-center rounded-full border border-white/50 bg-[#17232D]/55 text-white/95 opacity-90 backdrop-blur-[2px] transition-all hover:border-white hover:bg-[#17232D]/80 hover:text-white hover:opacity-100 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D6A12B]"
         >
           <ChevronLeft size={18} aria-hidden="true" />
         </button>
@@ -501,7 +556,7 @@ export default function HomeHero() {
           type="button"
           onClick={next}
           aria-label="Next slide"
-          className="pointer-events-auto grid h-9 w-9 place-items-center rounded-full border border-white/30 bg-[#17232D]/15 text-white/40 opacity-60 backdrop-blur-[1px] transition-all hover:border-white/60 hover:bg-[#17232D]/40 hover:text-white hover:opacity-100 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D6A12B] sm:h-10 sm:w-10"
+          className="pointer-events-auto grid h-11 w-11 place-items-center rounded-full border border-white/50 bg-[#17232D]/55 text-white/95 opacity-90 backdrop-blur-[2px] transition-all hover:border-white hover:bg-[#17232D]/80 hover:text-white hover:opacity-100 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D6A12B]"
         >
           <ChevronRight size={18} aria-hidden="true" />
         </button>

@@ -39,7 +39,7 @@ const socialLinks = [
   { label: "Instagram", href: company.social.instagram, icon: Camera },
   { label: "LinkedIn", href: company.social.linkedin, icon: BriefcaseBusiness },
   { label: "Twitter", href: company.social.twitter, icon: AtSign },
-];
+].filter(({ href }) => href && href !== "#");
 
 const currentYear = new Date().getFullYear();
 
@@ -49,7 +49,7 @@ export default function Footer() {
 
   useEffect(() => {
     const footer = footerRef.current;
-    if (!footer) return;
+    if (!footer || typeof IntersectionObserver === "undefined") return;
 
     const observer = new IntersectionObserver(
       ([entry]) => setShowBackToTop(entry.isIntersecting),
@@ -60,9 +60,9 @@ export default function Footer() {
   }, []);
 
   const scrollToTop = () => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const prefersReducedMotion =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({
       top: 0,
       behavior: prefersReducedMotion ? "auto" : "smooth",
@@ -77,17 +77,17 @@ export default function Footer() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 py-8 sm:px-8 lg:px-12 lg:py-10 xl:px-16">
-        <div className="grid grid-cols-1 gap-6 border-b border-[#EAE6DC] pb-6 md:grid-cols-2 lg:grid-cols-4">
-          <section aria-labelledby="footer-company" className="hero-stagger" style={{ animationDelay: "60ms" }}>
+      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 pb-5 pt-7 sm:px-8 lg:px-12 lg:pb-6 lg:pt-7 xl:px-16">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-3 border-b border-[#EAE6DC] pb-3 sm:gap-x-5 sm:gap-y-3 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-3">
+          <section aria-labelledby="footer-company" className="hero-stagger col-span-2 lg:col-span-1" style={{ animationDelay: "60ms" }}>
             <h2
               id="footer-company"
-              className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
             >
               Company
             </h2>
-            <Link to="/" className="flex items-center gap-3" aria-label={`${company.name} Home`}>
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-white p-1.5 shadow-sm ring-1 ring-[#EAE6DC]">
+            <Link to="/" className="flex items-center gap-2.5" aria-label={`${company.name} Home`}>
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-white p-1.5 shadow-sm ring-1 ring-[#EAE6DC]">
                 <img src={HOME_LOGO_SRC} alt="" className="h-full w-full object-contain" />
               </span>
               <span className="min-w-0">
@@ -99,42 +99,46 @@ export default function Footer() {
                 >
                   G.A. Palve &amp; Company
                 </span>
-                <span className="mt-1 block text-[9px] font-bold uppercase tracking-[0.18em] text-[#7A5010]">
+                <span className="mt-0.5 block text-[9px] font-bold uppercase tracking-[0.18em] text-[#7A5010]">
                   Quality Construction, Trusted Service
                 </span>
               </span>
             </Link>
-            <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-[#666C73]">
+            <p className="mt-1.5 max-w-xs text-[12px] leading-tight text-[#666C73] sm:text-[13px] lg:line-clamp-3">
               Delivering dependable construction and infrastructure solutions with
               quality workmanship and accountable delivery.
             </p>
-            <div className="mt-3 flex items-center gap-2">
-              {socialLinks.map(({ label, href, icon: Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="grid h-8 w-8 place-items-center rounded-full border border-[#EAE6DC] bg-white text-[#7A5010] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620]"
-                >
-                  <Icon size={16} aria-hidden="true" />
-                </a>
-              ))}
-            </div>
+            {socialLinks.length > 0 && (
+              <div className="mt-1.5 flex items-center gap-2">
+                {socialLinks.map(({ label, href, icon: Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    aria-label={label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="grid h-9 w-9 place-items-center rounded-full border border-[#EAE6DC] bg-white text-[#7A5010] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620]"
+                  >
+                    <Icon size={16} aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            )}
           </section>
 
           <section aria-labelledby="footer-links" className="hero-stagger" style={{ animationDelay: "140ms" }}>
             <h2
               id="footer-links"
-              className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
             >
               Quick Links
             </h2>
-            <ul className="space-y-2 text-[13px]">
+            <ul className="flex flex-col gap-3 text-[12px] leading-tight sm:text-[13px]">
               {quickLinks.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="transition-colors hover:text-[#7A5010]"
+                    className="relative inline-flex min-h-5 items-center leading-tight transition-colors hover:text-[#7A5010] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {link.label}
                   </Link>
@@ -146,16 +150,16 @@ export default function Footer() {
           <section aria-labelledby="footer-services" className="hero-stagger" style={{ animationDelay: "220ms" }}>
             <h2
               id="footer-services"
-              className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
             >
               Our Services
             </h2>
-            <ul className="space-y-2 text-[13px]">
+            <ul className="flex flex-col gap-3 text-[12px] leading-tight sm:text-[13px]">
               {footerServices.map((service) => (
                 <li key={service.path}>
                   <Link
                     to={service.path}
-                    className="block transition-colors hover:text-[#7A5010]"
+                    className="relative flex min-h-5 items-center leading-tight transition-colors hover:text-[#7A5010] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {service.label}
                   </Link>
@@ -164,22 +168,22 @@ export default function Footer() {
             </ul>
           </section>
 
-          <section aria-labelledby="footer-contact" className="hero-stagger" style={{ animationDelay: "300ms" }}>
+          <section aria-labelledby="footer-contact" className="hero-stagger col-span-2 lg:col-span-1" style={{ animationDelay: "300ms" }}>
             <h2
               id="footer-contact"
-              className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
             >
               Contact Information
             </h2>
             <address className="not-italic">
-              <ul className="space-y-2 text-[13px] leading-snug text-[#666C73]">
+              <ul className="flex flex-col gap-4 text-[12px] leading-tight text-[#666C73] sm:text-[13px]">
                 <li className="flex items-start gap-2">
                   <MapPin size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
                   <a
                     href={company.maps.directionsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="break-words transition-colors hover:text-[#242620]"
+                    className="relative inline-flex min-h-5 items-center break-words leading-tight transition-colors hover:text-[#242620] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {company.address}
                   </a>
@@ -188,7 +192,7 @@ export default function Footer() {
                   <Phone size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
                   <a
                     href={`tel:${company.phone.replace(/\s/g, "")}`}
-                    className="break-words transition-colors hover:text-[#242620]"
+                    className="relative inline-flex min-h-5 items-center break-words leading-tight transition-colors hover:text-[#242620] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {company.phone}
                   </a>
@@ -197,7 +201,7 @@ export default function Footer() {
                   <Mail size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
                   <a
                     href={`mailto:${company.email}`}
-                    className="break-all transition-colors hover:text-[#242620]"
+                    className="relative inline-flex min-h-5 items-center break-all leading-tight transition-colors hover:text-[#242620] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {company.email}
                   </a>
@@ -219,7 +223,7 @@ export default function Footer() {
           <button
             type="button"
             onClick={scrollToTop}
-            className="-mt-6 inline-flex items-center gap-2 rounded-full border border-[#B37F00]/40 bg-white px-4 py-1.5 text-xs font-bold text-[#7A5010] shadow-[0_8px_20px_rgba(30,27,22,0.08)] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B37F00]"
+            className="-mt-6 inline-flex min-h-8 items-center gap-2 rounded-full border border-[#B37F00]/40 bg-white px-4 text-xs font-bold text-[#7A5010] shadow-[0_8px_20px_rgba(30,27,22,0.08)] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B37F00]"
             aria-label="Back to top"
           >
             <ArrowUp size={14} aria-hidden="true" />
@@ -227,16 +231,16 @@ export default function Footer() {
           </button>
         </div>
 
-        <div className="flex flex-col gap-3 pt-3 text-xs text-[#666C73] sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-1 pt-1 text-xs leading-tight text-[#666C73] sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <p>© {currentYear} {company.name}. All rights reserved.</p>
           <nav className="flex flex-wrap items-center gap-x-3 gap-y-1" aria-label="Legal navigation">
-            <Link to="/privacy-policy" className="transition-colors hover:text-[#7A5010]">
+            <Link to="/privacy-policy" className="relative inline-flex min-h-5 items-center leading-tight transition-colors hover:text-[#7A5010] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']">
               Privacy Policy
             </Link>
             <span className="text-[#D8D2C6]" aria-hidden="true">
               |
             </span>
-            <Link to="/terms-conditions" className="transition-colors hover:text-[#7A5010]">
+              <Link to="/terms-conditions" className="relative inline-flex min-h-5 items-center leading-tight transition-colors hover:text-[#7A5010] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']">
               Terms &amp; Conditions
             </Link>
           </nav>

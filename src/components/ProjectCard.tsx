@@ -36,9 +36,9 @@ export default function ProjectCard({ project }: Props) {
           <CheckCircle2 size={13} className="shrink-0" />
           <span className="break-words">{project.status}</span>
         </div>
-        <h3 className="mt-1 line-clamp-2 font-heading text-lg font-bold leading-snug text-[#242620] transition-colors group-hover:text-[#7A5010]">
+        <h2 className="mt-1 line-clamp-2 font-heading text-lg font-bold leading-snug text-[#242620] transition-colors group-hover:text-[#7A5010]">
           {project.title}
-        </h3>
+        </h2>
         <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-[#666C73]">
           {project.shortDescription}
         </p>

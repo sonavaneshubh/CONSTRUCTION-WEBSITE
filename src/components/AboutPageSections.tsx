@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Building2,
   Handshake,
@@ -36,7 +36,7 @@ export function FounderSection() {
               className="aspect-[4/5] w-full object-cover"
               loading="lazy"
             />
-            <span className="absolute left-4 top-4 rounded-full border border-white/80 bg-white/95 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#7A5010] shadow-sm sm:left-5 sm:top-5">
+            <span className="absolute bottom-3 left-3 max-w-[calc(100%-1.5rem)] rounded-full border border-white/80 bg-white/95 px-2.5 py-1 text-[8px] font-extrabold uppercase leading-tight tracking-[0.08em] text-[#7A5010] shadow-sm sm:bottom-4 sm:left-4 sm:px-3 sm:text-[9px]">
               {founder.designation}
             </span>
           </div>
@@ -146,12 +146,59 @@ function CertificatePreview({
   certificate: (typeof aboutPageContent.certificates)[number];
   onClose: () => void;
 }) {
+  const dialogRef = useRef<HTMLElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const previousActiveElement =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
+
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusableElements = Array.from(
+        dialog.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((element) => element.getClientRects().length > 0);
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+
+      if (!first || !last) {
+        event.preventDefault();
+        dialog.focus();
+      } else if (
+        event.shiftKey &&
+        (document.activeElement === first || !dialog.contains(document.activeElement))
+      ) {
+        event.preventDefault();
+        last.focus();
+      } else if (
+        !event.shiftKey &&
+        (document.activeElement === last || !dialog.contains(document.activeElement))
+      ) {
+        event.preventDefault();
+        first.focus();
+      }
     };
+
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      if (previousActiveElement?.isConnected) previousActiveElement.focus();
+    };
   }, [onClose]);
 
   return (
@@ -163,12 +210,15 @@ function CertificatePreview({
       }}
     >
       <section
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="certificate-preview-title"
+        tabIndex={-1}
         className="relative max-h-[90svh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white p-4 shadow-2xl sm:p-6"
       >
         <button
+          ref={closeButtonRef}
           type="button"
           onClick={onClose}
           aria-label="Close certificate preview"

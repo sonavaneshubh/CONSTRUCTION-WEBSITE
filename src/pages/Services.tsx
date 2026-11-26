@@ -17,6 +17,7 @@ import SiteImage from "../components/SiteImage";
 import CTASection from "../components/CTASection";
 import PageIntro from "../components/PageIntro";
 import { services } from "../data/services";
+import { usePageMeta } from "../hooks/usePageMeta";
 
 const iconMap: Record<string, React.ElementType> = {
   "building-2": Building2,
@@ -31,6 +32,13 @@ const iconMap: Record<string, React.ElementType> = {
 };
 
 export default function Services() {
+  usePageMeta({
+    title: "Our Services",
+    description:
+      "Explore civil construction, roads and highways, water supply systems, government contracting, building works, land development and solar infrastructure services.",
+    path: "/services",
+  });
+
   return (
     <div className="interior-page">
       <PageIntro
@@ -65,9 +73,9 @@ export default function Services() {
                         </span>
                       </div>
 
-                      <h3 className="font-heading text-lg font-bold leading-snug text-[#242620]">
+                      <h2 className="font-heading text-lg font-bold leading-snug text-[#242620]">
                         {service.title}
-                      </h3>
+                      </h2>
                       <p className="mt-1 text-sm leading-relaxed text-[#666C73]">
                         {service.shortDescription}
                       </p>
@@ -98,7 +106,7 @@ export default function Services() {
       </section>
 
       <CTASection
-        heading="Need a Turnkey Infrastructure Partner?"
+        heading="Need a Civil Infrastructure Partner?"
         text="Tell us about your tender, site or development plan. Our engineering team will prepare a practical next step."
       />
     </div>

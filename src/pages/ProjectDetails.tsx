@@ -14,10 +14,21 @@ import {
   Building2,
   ShieldCheck,
 } from "lucide-react";
+import { usePageMeta } from "../hooks/usePageMeta";
 
 export default function ProjectDetails() {
   const { id } = useParams<{ id: string }>();
   const project = projects.find((p) => p.id === id);
+
+  usePageMeta({
+    title: project?.title ?? "Project Not Found",
+    description: project
+      ? `${project.title} in ${project.location} by G A Palve and Company.`
+      : "The requested infrastructure project could not be found.",
+    path: `/projects/${id ?? ""}`,
+    image: project?.coverImage,
+    robots: project ? "index, follow" : "noindex, nofollow",
+  });
 
   if (!project) {
     return (

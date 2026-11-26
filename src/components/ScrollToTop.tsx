@@ -12,9 +12,14 @@ export default function ScrollToTop() {
     const behavior: ScrollBehavior = reduced ? "auto" : "smooth";
 
     if (hash) {
-      const element = document.querySelector(hash);
-      if (element) {
-        element.scrollIntoView({ behavior });
+      let target: Element | null = null;
+      try {
+        target = document.getElementById(decodeURIComponent(hash.slice(1)));
+      } catch {
+        target = null;
+      }
+      if (target) {
+        target.scrollIntoView({ behavior });
         return;
       }
     }

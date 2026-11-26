@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Menu, Phone, X } from "lucide-react";
+import { company } from "../data/company";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 const HOME_LOGO_SRC = "/images/Logo/logo.jpeg";
+const telHref = (number: string) => `tel:${number.replace(/\s/g, "")}`;
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -29,6 +32,7 @@ export default function HomeHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [logoFailed, setLogoFailed] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const menuRef = useFocusTrap<HTMLDivElement>(mobileOpen);
   const location = useLocation();
   const isHome = location.pathname === "/";
 
@@ -62,12 +66,18 @@ export default function HomeHeader() {
   }, [mobileOpen]);
 
   useEffect(() => {
+    if (typeof window.matchMedia !== "function") return;
+
     const media = window.matchMedia("(min-width: 1024px)");
     const handleChange = (event: MediaQueryListEvent) => {
       if (event.matches) setMobileOpen(false);
     };
-    media.addEventListener("change", handleChange);
-    return () => media.removeEventListener("change", handleChange);
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", handleChange);
+      return () => media.removeEventListener("change", handleChange);
+    }
+    media.addListener(handleChange);
+    return () => media.removeListener(handleChange);
   }, []);
 
   const isActiveLink = (isActive: boolean) => isActive;
@@ -98,15 +108,15 @@ export default function HomeHeader() {
         }`}
       >
         <div className="mx-auto w-full max-w-[1500px] px-5 sm:px-8 lg:px-12 xl:px-16">
-          <div className="flex h-16 items-center justify-between gap-2.5 lg:h-[4.25rem]">
+          <div className="flex h-16 items-center justify-between gap-2 lg:h-[4.25rem]">
             <Link
               to="/"
               onClick={closeMenu}
-              className="flex min-w-0 items-center gap-2.5"
+              className="flex min-w-0 items-center gap-2 sm:gap-2.5"
               aria-label="G.A. Palve & Company Home"
             >
               {!logoFailed && (
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white p-1 shadow-sm ring-1 ring-[#EAE6DC] lg:h-12 lg:w-12">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white p-1 shadow-sm ring-1 ring-[#EAE6DC] sm:h-11 sm:w-11 lg:h-12 lg:w-12">
                   <img
                     src={HOME_LOGO_SRC}
                     alt=""
@@ -117,7 +127,7 @@ export default function HomeHeader() {
               )}
               <span className="flex min-w-0 flex-col">
                 <span
-                  className="truncate text-[19px] font-extrabold leading-none text-[#242620] sm:text-[22px] lg:text-[26px]"
+                  className="truncate text-[18px] font-extrabold leading-none text-[#242620] sm:text-[22px] lg:text-[26px]"
                   style={{
                     fontFamily: '"Bahnschrift", "Segoe UI Variable Display", "Segoe UI", Arial, sans-serif',
                     letterSpacing: "-0.03em",
@@ -125,7 +135,7 @@ export default function HomeHeader() {
                 >
                   G.A. Palve &amp; Company
                 </span>
-                <span className="mt-1 hidden text-[9px] font-extrabold uppercase leading-tight tracking-[0.16em] text-[#7A5010] sm:block">
+                <span className="mt-0.5 block whitespace-nowrap text-[7.5px] font-extrabold uppercase leading-tight tracking-[0.01em] text-[#7A5010] sm:mt-1 sm:text-[9px] sm:tracking-[0.16em]">
                   Quality Construction, Trusted Service
                 </span>
               </span>
@@ -212,6 +222,14 @@ export default function HomeHeader() {
             </nav>
 
             <div className="flex shrink-0 items-center gap-2">
+              <a
+                href={telHref(company.phone)}
+                aria-label={`Call ${company.name} at ${company.phone}`}
+                className="hidden h-11 items-center gap-2 rounded-full border border-[#EAE6DC] bg-white px-3.5 text-[11px] font-bold text-[#4A4F55] transition-colors hover:border-[#B37F00] hover:text-[#7A5010] lg:inline-flex xl:px-4"
+              >
+                <Phone size={15} className="shrink-0 text-[#7A5010]" aria-hidden="true" />
+                <span className="hidden xl:inline">{company.phone}</span>
+              </a>
               <Link
                 to="/contact"
                 className="hidden h-11 items-center gap-2 rounded-full border border-[#B37F00] bg-[#FFB800] px-5 text-xs font-bold text-[#242620] shadow-[0_10px_24px_rgba(30,27,22,0.12)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#FFD166] lg:inline-flex"
@@ -219,6 +237,13 @@ export default function HomeHeader() {
                 Get a Quote
                 <ArrowUpRight size={16} className="text-[#242620]" aria-hidden="true" />
               </Link>
+              <a
+                href={telHref(company.phone)}
+                aria-label={`Call ${company.name} at ${company.phone}`}
+                className="hidden h-10 w-10 place-items-center rounded-lg border border-[#EAE6DC] bg-white text-[#7A5010] transition-colors hover:border-[#B37F00] sm:grid lg:hidden"
+              >
+                <Phone size={18} aria-hidden="true" />
+              </a>
               <button
                 type="button"
                 onClick={() => setMobileOpen((open) => !open)}
@@ -235,13 +260,22 @@ export default function HomeHeader() {
       </header>
 
       <div
+        ref={menuRef}
         id="home-mobile-navigation"
         hidden={!mobileOpen}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
+        tabIndex={-1}
         className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto rounded-b-2xl border-t border-[#EAE6DC] bg-white px-5 pb-8 pt-4 shadow-[0_20px_45px_rgba(30,27,22,0.14)] lg:hidden"
       >
         <nav className="flex flex-col divide-y divide-[#EAE6DC]" aria-label="Mobile navigation">
-          {navLinks.map((link) => (
-            <div key={link.path}>
+          {navLinks.map((link, index) => (
+            <div
+              key={link.path}
+              className="mobile-nav-item"
+              style={{ animationDelay: `${index * 35}ms` }}
+            >
               <NavLink
                 to={link.path}
                 end={link.path === "/"}
@@ -267,7 +301,7 @@ export default function HomeHeader() {
                       key={item.id}
                       to={`/services#${item.id}`}
                       onClick={closeMenu}
-                      className="py-1.5 text-sm font-semibold text-[#4A4F55] transition-colors hover:text-[#7A5010]"
+                      className="flex min-h-11 items-center text-sm font-semibold text-[#4A4F55] transition-colors hover:text-[#7A5010]"
                     >
                       {item.label}
                     </Link>
@@ -278,10 +312,28 @@ export default function HomeHeader() {
           ))}
         </nav>
 
+        <div className="mobile-nav-item mt-5 rounded-xl border border-[#EAE6DC] bg-[#FAF8F3] p-2" style={{ animationDelay: "210ms" }}>
+          <p className="px-2 pb-1 pt-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#7A5010]">
+            Call us
+          </p>
+          {[company.phone, company.phoneAlternate].map((number) => (
+            <a
+              key={number}
+              href={telHref(number)}
+              onClick={closeMenu}
+              className="flex min-h-11 items-center gap-2.5 rounded-lg px-2 text-sm font-bold text-[#242620] transition-colors hover:bg-white hover:text-[#7A5010]"
+            >
+              <Phone size={16} className="shrink-0 text-[#7A5010]" aria-hidden="true" />
+              <span>{number}</span>
+            </a>
+          ))}
+        </div>
+
         <Link
           to="/contact"
           onClick={closeMenu}
-          className="mt-6 flex h-12 items-center justify-center gap-2 rounded-full border border-[#B37F00] bg-[#FFB800] px-5 text-sm font-bold text-[#242620] shadow-[0_12px_28px_rgba(30,27,22,0.12)]"
+          className="mobile-nav-item mt-3 flex h-12 items-center justify-center gap-2 rounded-full border border-[#B37F00] bg-[#FFB800] px-5 text-sm font-bold text-[#242620] shadow-[0_12px_28px_rgba(30,27,22,0.12)]"
+          style={{ animationDelay: "245ms" }}
         >
           Get a Quote
           <ArrowUpRight size={17} className="text-[#242620]" aria-hidden="true" />
