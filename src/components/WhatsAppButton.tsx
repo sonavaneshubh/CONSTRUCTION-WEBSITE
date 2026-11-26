@@ -1,12 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { company } from "../data/company";
 
 export default function WhatsAppButton() {
-  const { pathname } = useLocation();
-  const [snapshotVisible, setSnapshotVisible] = useState(false);
-  const controlsRef = useRef<HTMLDivElement>(null);
-  const updateFrameRef = useRef<number | null>(null);
   const url = `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(
     company.whatsappMessage
   )}`;
@@ -24,69 +18,16 @@ export default function WhatsAppButton() {
     },
   ].filter(({ href }) => href && href !== "#");
 
-  useEffect(() => {
-    if (pathname !== "/") return;
-
-    const snapshot = document.querySelector(".home-hero__snapshot");
-    const controls = controlsRef.current;
-    if (!snapshot || !controls) return;
-
-    const updateVisibility = () => {
-      if (updateFrameRef.current !== null) return;
-
-      updateFrameRef.current = window.requestAnimationFrame(() => {
-        updateFrameRef.current = null;
-        const cardRect = snapshot.getBoundingClientRect();
-        const controlsRect = controls.getBoundingClientRect();
-        const overlaps =
-          cardRect.left < controlsRect.right &&
-          cardRect.right > controlsRect.left &&
-          cardRect.top < controlsRect.bottom &&
-          cardRect.bottom > controlsRect.top;
-
-        setSnapshotVisible((previous) => (previous === overlaps ? previous : overlaps));
-      });
-    };
-
-    window.addEventListener("scroll", updateVisibility, { passive: true });
-    window.addEventListener("resize", updateVisibility);
-    const resizeObserver =
-      typeof ResizeObserver === "undefined"
-        ? null
-        : new ResizeObserver(updateVisibility);
-    resizeObserver?.observe(snapshot);
-    resizeObserver?.observe(controls);
-    updateVisibility();
-
-    return () => {
-      window.removeEventListener("scroll", updateVisibility);
-      window.removeEventListener("resize", updateVisibility);
-      resizeObserver?.disconnect();
-      if (updateFrameRef.current !== null) {
-        window.cancelAnimationFrame(updateFrameRef.current);
-        updateFrameRef.current = null;
-      }
-    };
-  }, [pathname]);
-
-  const shouldHide = pathname === "/" && snapshotVisible;
-
   return (
     <div
-      ref={controlsRef}
-      aria-hidden={shouldHide}
-      inert={shouldHide}
-      className={`fixed bottom-6 right-6 z-[var(--z-float)] flex flex-col-reverse items-center gap-2 transition-opacity duration-300 ${
-        shouldHide ? "pointer-events-none opacity-0" : "opacity-100"
-      }`}
+      className="fixed bottom-6 right-6 z-[var(--z-float)] flex flex-col-reverse items-center gap-2"
     >
       <a
         href={url}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Direct WhatsApp Inquiry with G A Palve and Company"
-        tabIndex={shouldHide ? -1 : undefined}
-        className="group relative grid h-12 w-12 place-items-center rounded-full border border-[#FFB800]/40 bg-[#25D366] text-white opacity-75 shadow-lg shadow-green-500/25 transition-all duration-300 hover:scale-110 hover:opacity-100 hover:shadow-green-500/50 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#168C4A]"
+        className="group relative grid h-12 w-12 place-items-center rounded-full border border-[#FFB800]/40 bg-[#25D366] text-white shadow-lg shadow-green-500/25 transition-all duration-300 hover:scale-110 hover:shadow-green-500/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#168C4A]"
       >
         <svg
           aria-hidden="true"
@@ -108,8 +49,7 @@ export default function WhatsAppButton() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Visit us on ${label}`}
-          tabIndex={shouldHide ? -1 : undefined}
-          className={`group relative grid h-11 w-11 place-items-center rounded-full opacity-75 shadow-md transition-all duration-300 hover:scale-110 hover:opacity-100 hover:shadow-lg focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#242620] ${className}`}
+          className={`group relative grid h-11 w-11 place-items-center rounded-full shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#242620] ${className}`}
         >
           {label === "Instagram" ? (
             <svg aria-hidden="true" viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

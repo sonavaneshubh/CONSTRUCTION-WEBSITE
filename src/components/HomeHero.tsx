@@ -359,7 +359,7 @@ export default function HomeHero() {
   return (
     <section
       id="home"
-      className="home-hero relative isolate min-h-[100svh] overflow-hidden bg-[#17232D] text-white"
+      className="home-hero group/hero relative isolate min-h-[100svh] overflow-hidden bg-[#17232D] text-white"
       aria-roledescription="carousel"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -531,7 +531,7 @@ export default function HomeHero() {
       </div>
 
       <div
-        className="pointer-events-none absolute inset-x-0 top-1/2 z-30 flex -translate-y-1/2 items-center justify-between"
+        className="pointer-events-none absolute inset-x-0 top-1/2 z-30 hidden -translate-y-1/2 items-center justify-between opacity-0 transition-opacity duration-300 group-hover/hero:opacity-100 focus-within:opacity-100 lg:flex"
         role="group"
         aria-label="Hero slideshow controls"
         onKeyDown={(event) => {

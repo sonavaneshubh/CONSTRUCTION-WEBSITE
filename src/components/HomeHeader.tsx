@@ -87,8 +87,8 @@ export default function HomeHeader() {
   const desktopLinkClass = (isActive: boolean) =>
     `relative whitespace-nowrap px-2 py-2 text-[11px] font-bold transition-colors xl:px-2.5 xl:text-xs 2xl:text-sm ${
       isActiveLink(isActive)
-        ? "text-[#7A5010]"
-        : "text-[#4A4F55] hover:text-[#7A5010]"
+        ? "text-[#FFD166]"
+        : "text-[#E8E5DC] hover:text-[#FFD166]"
     }`;
 
   const mobileLinkClass = (isActive: boolean) =>
@@ -101,10 +101,10 @@ export default function HomeHeader() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 rounded-b-2xl border-b border-[#EAE6DC] transition-[background-color,box-shadow] duration-300 ${
+        className={`fixed inset-x-0 top-0 z-50 rounded-b-2xl border-b border-[#5A6154] bg-header transition-[box-shadow] duration-300 ${
           isHome && isScrolled
-            ? "bg-white/95 shadow-[0_6px_24px_rgba(23,35,45,0.12)] backdrop-blur-md"
-            : "bg-white shadow-[0_10px_35px_rgba(30,27,22,0.08)]"
+            ? "shadow-[0_6px_24px_rgba(0,0,0,0.16)]"
+            : "shadow-[0_10px_35px_rgba(0,0,0,0.12)]"
         }`}
       >
         <div className="mx-auto w-full max-w-[1500px] px-5 sm:px-8 lg:px-12 xl:px-16">
@@ -126,16 +126,10 @@ export default function HomeHeader() {
                 </span>
               )}
               <span className="flex min-w-0 flex-col">
-                <span
-                  className="truncate text-[18px] font-extrabold leading-none text-[#242620] sm:text-[22px] lg:text-[26px]"
-                  style={{
-                    fontFamily: '"Bahnschrift", "Segoe UI Variable Display", "Segoe UI", Arial, sans-serif',
-                    letterSpacing: "-0.03em",
-                  }}
-                >
+                <span className="truncate font-heading text-[18px] font-extrabold leading-none tracking-[-0.03em] text-white sm:text-[22px] lg:text-[26px]">
                   G.A. Palve &amp; Company
                 </span>
-                <span className="mt-0.5 block whitespace-nowrap text-[7.5px] font-extrabold uppercase leading-tight tracking-[0.01em] text-[#7A5010] sm:mt-1 sm:text-[9px] sm:tracking-[0.16em]">
+                <span className="mt-0.5 block whitespace-nowrap font-body text-[7.5px] font-extrabold uppercase leading-tight tracking-[0.01em] text-[#FFD166] sm:mt-1 sm:text-[9px] sm:tracking-[0.16em]">
                   Quality Construction, Trusted Service
                 </span>
               </span>
@@ -183,7 +177,7 @@ export default function HomeHeader() {
                   </NavLink>
                   <ChevronDown
                     size={14}
-                    className="ml-0.5 shrink-0 text-[#666C73] transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"
+                    className="ml-0.5 shrink-0 text-[#CBC8BE] transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"
                     aria-hidden="true"
                   />
                 </div>
@@ -225,9 +219,9 @@ export default function HomeHeader() {
               <a
                 href={telHref(company.phone)}
                 aria-label={`Call ${company.name} at ${company.phone}`}
-                className="hidden h-11 items-center gap-2 rounded-full border border-[#EAE6DC] bg-white px-3.5 text-[11px] font-bold text-[#4A4F55] transition-colors hover:border-[#B37F00] hover:text-[#7A5010] lg:inline-flex xl:px-4"
+                className="hidden h-11 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 text-[11px] font-bold text-[#E8E5DC] transition-colors hover:border-[#FFD166] hover:text-[#FFD166] lg:inline-flex xl:px-4"
               >
-                <Phone size={15} className="shrink-0 text-[#7A5010]" aria-hidden="true" />
+                <Phone size={15} className="shrink-0 text-[#FFD166]" aria-hidden="true" />
                 <span className="hidden xl:inline">{company.phone}</span>
               </a>
               <Link
@@ -240,14 +234,14 @@ export default function HomeHeader() {
               <a
                 href={telHref(company.phone)}
                 aria-label={`Call ${company.name} at ${company.phone}`}
-                className="hidden h-10 w-10 place-items-center rounded-lg border border-[#EAE6DC] bg-white text-[#7A5010] transition-colors hover:border-[#B37F00] sm:grid lg:hidden"
+                className="hidden h-10 w-10 place-items-center rounded-lg border border-white/20 bg-white/10 text-[#FFD166] transition-colors hover:border-[#FFD166] sm:grid lg:hidden"
               >
                 <Phone size={18} aria-hidden="true" />
               </a>
               <button
                 type="button"
                 onClick={() => setMobileOpen((open) => !open)}
-                className="grid h-10 w-10 place-items-center rounded-lg border border-[#EAE6DC] bg-white text-[#242620] transition-colors hover:border-[#B37F00] hover:text-[#7A5010] lg:hidden"
+                className="grid h-10 w-10 place-items-center rounded-lg border border-white/20 bg-white/10 text-white transition-colors hover:border-[#FFD166] hover:text-[#FFD166] lg:hidden"
                 aria-label={mobileOpen ? "Close menu" : "Open menu"}
                 aria-expanded={mobileOpen}
                 aria-controls="home-mobile-navigation"

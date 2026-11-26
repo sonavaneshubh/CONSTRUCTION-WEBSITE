@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowUp,
@@ -44,19 +44,29 @@ const socialLinks = [
 const currentYear = new Date().getFullYear();
 
 export default function Footer() {
-  const footerRef = useRef<HTMLElement | null>(null);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
-    const footer = footerRef.current;
-    if (!footer || typeof IntersectionObserver === "undefined") return;
+    let frame = 0;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setShowBackToTop(entry.isIntersecting),
-      { threshold: 0.15 },
-    );
-    observer.observe(footer);
-    return () => observer.disconnect();
+    const update = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        const atBottom =
+          window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+        setShowBackToTop(atBottom);
+      });
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   const scrollToTop = () => {
@@ -70,41 +80,36 @@ export default function Footer() {
   };
 
   return (
-    <footer ref={footerRef} className="relative isolate overflow-hidden border-t border-[#EAE6DC] bg-[#F6F5F1] text-[#4A4F55]">
-      <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-[#F6F5F1]/80 to-[#F0EEE7]/90" />
+    <footer className="relative isolate overflow-hidden border-t border-[#4A5044] bg-footer text-[#E8E5DC]">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#3B4137]/80 via-[#2A2E28]/85 to-[#242820]/90" />
       <div
         className="hero-beam absolute -left-1/3 top-[-40%] h-[180%] w-2/3 bg-gradient-to-r from-transparent via-[#FFB800]/10 to-transparent blur-3xl"
         aria-hidden="true"
       />
 
       <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 pb-5 pt-7 sm:px-8 lg:px-12 lg:pb-6 lg:pt-7 xl:px-16">
-        <div className="grid grid-cols-2 gap-x-4 gap-y-3 border-b border-[#EAE6DC] pb-3 sm:gap-x-5 sm:gap-y-3 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-3">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-3 border-b border-white/15 pb-3 sm:gap-x-5 sm:gap-y-3 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-3">
           <section aria-labelledby="footer-company" className="hero-stagger col-span-2 lg:col-span-1" style={{ animationDelay: "60ms" }}>
             <h2
               id="footer-company"
-              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-2 text-[11px] font-extrabold uppercase leading-[1.3] tracking-[0.22em] text-[#FFD166]"
             >
               Company
             </h2>
             <Link to="/" className="flex items-center gap-2.5" aria-label={`${company.name} Home`}>
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-white p-1.5 shadow-sm ring-1 ring-[#EAE6DC]">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-white p-1.5 shadow-sm ring-1 ring-white/20">
                 <img src={HOME_LOGO_SRC} alt="" className="h-full w-full object-contain" />
               </span>
               <span className="min-w-0">
-                <span
-                  className="block truncate font-heading text-lg font-extrabold uppercase leading-tight tracking-[-0.03em] text-[#242620]"
-                  style={{
-                    fontFamily: '"Bahnschrift", "Segoe UI Variable Display", "Segoe UI", Arial, sans-serif',
-                  }}
-                >
+                <span className="block truncate font-heading text-lg font-extrabold uppercase leading-[1.2] tracking-[-0.03em] text-white">
                   G.A. Palve &amp; Company
                 </span>
-                <span className="mt-0.5 block text-[9px] font-bold uppercase tracking-[0.18em] text-[#7A5010]">
+                <span className="mt-1 block font-body text-[9px] font-bold uppercase leading-[1.3] tracking-[0.18em] text-[#FFD166]">
                   Quality Construction, Trusted Service
                 </span>
               </span>
             </Link>
-            <p className="mt-1.5 max-w-xs text-[12px] leading-tight text-[#666C73] sm:text-[13px] lg:line-clamp-3">
+            <p className="mt-2 max-w-xs text-[12px] leading-[1.5] text-[#CBC8BE] sm:text-[13px] sm:leading-[1.5] lg:line-clamp-3">
               Delivering dependable construction and infrastructure solutions with
               quality workmanship and accountable delivery.
             </p>
@@ -117,7 +122,7 @@ export default function Footer() {
                     aria-label={label}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="grid h-9 w-9 place-items-center rounded-full border border-[#EAE6DC] bg-white text-[#7A5010] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620]"
+                    className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-white/15 text-[#FFD166] transition duration-300 hover:-translate-y-0.5 hover:border-[#FFB800] hover:bg-[#FFB800] hover:text-[#1B1E1A]"
                   >
                     <Icon size={16} aria-hidden="true" />
                   </a>
@@ -129,7 +134,7 @@ export default function Footer() {
           <section aria-labelledby="footer-links" className="hero-stagger" style={{ animationDelay: "140ms" }}>
             <h2
               id="footer-links"
-              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#FFD166]"
             >
               Quick Links
             </h2>
@@ -138,7 +143,7 @@ export default function Footer() {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="relative inline-flex min-h-5 items-center leading-tight transition-colors hover:text-[#7A5010] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
+                    className="relative inline-flex min-h-5 items-center leading-tight transition-colors hover:text-[#FFD166] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {link.label}
                   </Link>
@@ -150,7 +155,7 @@ export default function Footer() {
           <section aria-labelledby="footer-services" className="hero-stagger" style={{ animationDelay: "220ms" }}>
             <h2
               id="footer-services"
-              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#FFD166]"
             >
               Our Services
             </h2>
@@ -159,7 +164,7 @@ export default function Footer() {
                 <li key={service.path}>
                   <Link
                     to={service.path}
-                    className="relative flex min-h-5 items-center leading-tight transition-colors hover:text-[#7A5010] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
+                    className="relative flex min-h-5 items-center leading-tight transition-colors hover:text-[#FFD166] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {service.label}
                   </Link>
@@ -171,43 +176,43 @@ export default function Footer() {
           <section aria-labelledby="footer-contact" className="hero-stagger col-span-2 lg:col-span-1" style={{ animationDelay: "300ms" }}>
             <h2
               id="footer-contact"
-              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#7A5010]"
+              className="mb-1.5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#FFD166]"
             >
               Contact Information
             </h2>
             <address className="not-italic">
-              <ul className="flex flex-col gap-4 text-[12px] leading-tight text-[#666C73] sm:text-[13px]">
+              <ul className="flex flex-col gap-4 text-[12px] leading-tight text-[#CBC8BE] sm:text-[13px]">
                 <li className="flex items-start gap-2">
-                  <MapPin size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
+                  <MapPin size={15} className="mt-0.5 shrink-0 text-[#FFD166]" aria-hidden="true" />
                   <a
                     href={company.maps.directionsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative inline-flex min-h-5 items-center break-words leading-tight transition-colors hover:text-[#242620] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
+                    className="relative inline-flex min-h-5 items-center break-words leading-tight transition-colors hover:text-[#FFD166] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {company.address}
                   </a>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Phone size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
+                  <Phone size={15} className="mt-0.5 shrink-0 text-[#FFD166]" aria-hidden="true" />
                   <a
                     href={`tel:${company.phone.replace(/\s/g, "")}`}
-                    className="relative inline-flex min-h-5 items-center break-words leading-tight transition-colors hover:text-[#242620] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
+                    className="relative inline-flex min-h-5 items-center break-words leading-tight transition-colors hover:text-[#FFD166] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {company.phone}
                   </a>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Mail size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
+                  <Mail size={15} className="mt-0.5 shrink-0 text-[#FFD166]" aria-hidden="true" />
                   <a
                     href={`mailto:${company.email}`}
-                    className="relative inline-flex min-h-5 items-center break-all leading-tight transition-colors hover:text-[#242620] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
+                    className="relative inline-flex min-h-5 items-center break-all leading-tight transition-colors hover:text-[#FFD166] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']"
                   >
                     {company.email}
                   </a>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Clock size={15} className="mt-0.5 shrink-0 text-[#7A5010]" aria-hidden="true" />
+                  <Clock size={15} className="mt-0.5 shrink-0 text-[#FFD166]" aria-hidden="true" />
                   <span>{company.businessHours}</span>
                 </li>
               </ul>
@@ -223,24 +228,23 @@ export default function Footer() {
           <button
             type="button"
             onClick={scrollToTop}
-            className="-mt-6 inline-flex min-h-8 items-center gap-2 rounded-full border border-[#B37F00]/40 bg-white px-4 text-xs font-bold text-[#7A5010] shadow-[0_8px_20px_rgba(30,27,22,0.08)] transition duration-300 hover:-translate-y-0.5 hover:border-[#B37F00] hover:bg-[#FFB800] hover:text-[#242620] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B37F00]"
+            className="-mt-6 grid h-9 w-9 place-items-center rounded-full border border-[#FFB800]/60 bg-[#3A4036] text-[#FFD166] shadow-[0_8px_20px_rgba(0,0,0,0.28)] transition duration-300 hover:-translate-y-0.5 hover:border-[#FFB800] hover:bg-[#FFB800] hover:text-[#2A2E28] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FFD166]"
             aria-label="Back to top"
           >
-            <ArrowUp size={14} aria-hidden="true" />
-            Back to Top
+            <ArrowUp size={16} aria-hidden="true" />
           </button>
         </div>
 
-        <div className="flex flex-col gap-1 pt-1 text-xs leading-tight text-[#666C73] sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+        <div className="flex flex-col gap-1 pt-1 text-xs leading-tight text-[#C4C1B8] sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <p>© {currentYear} {company.name}. All rights reserved.</p>
           <nav className="flex flex-wrap items-center gap-x-3 gap-y-1" aria-label="Legal navigation">
-            <Link to="/privacy-policy" className="relative inline-flex min-h-5 items-center leading-tight transition-colors hover:text-[#7A5010] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']">
+            <Link to="/privacy-policy" className="relative inline-flex min-h-5 items-center leading-tight transition-colors hover:text-[#FFD166] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']">
               Privacy Policy
             </Link>
-            <span className="text-[#D8D2C6]" aria-hidden="true">
+            <span className="text-white/35" aria-hidden="true">
               |
             </span>
-              <Link to="/terms-conditions" className="relative inline-flex min-h-5 items-center leading-tight transition-colors hover:text-[#7A5010] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']">
+              <Link to="/terms-conditions" className="relative inline-flex min-h-5 items-center leading-tight transition-colors hover:text-[#FFD166] after:absolute after:inset-x-0 after:-inset-y-1 after:content-['']">
               Terms &amp; Conditions
             </Link>
           </nav>
