@@ -111,7 +111,7 @@ export default function ContactForm() {
     setSubmitError("");
 
     try {
-      const subject = `New project inquiry from ${data.name}`;
+      const subject = `New inquiry from ${data.name}`;
       const response = await fetch(contactFormEndpoint, {
         method: "POST",
         headers: {

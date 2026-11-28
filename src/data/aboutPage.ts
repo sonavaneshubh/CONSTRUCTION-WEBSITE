@@ -72,18 +72,6 @@ export const aboutPageContent = {
       image: "/images/certification/gstn.jpeg.png",
       imageAlt: "GST registration certificate of G.A. Palve & Company",
     },
-    {
-      title: "Company Letterhead",
-      category: "Official company stationery",
-      authority: "G.A. Palve & Company",
-      number: "9960843555",
-      validity: "Dist. Ahilyanagar, Maharashtra 414402",
-      workCapacity: "",
-      fileType: "image",
-      document: "/images/certification/letterhead.jpeg",
-      image: "/images/certification/letterhead.jpeg",
-      imageAlt: "G.A. Palve & Company official letterhead",
-    },
   ],
   strengths: [
     {
