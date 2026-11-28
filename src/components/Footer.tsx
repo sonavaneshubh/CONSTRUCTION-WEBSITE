@@ -80,8 +80,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative isolate overflow-hidden border-t border-[#4A5044] bg-footer text-[#E8E5DC]">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#3B4137]/80 via-[#2A2E28]/85 to-[#242820]/90" />
+    <footer className="relative isolate overflow-hidden border-t border-[#59685D] bg-[linear-gradient(110deg,#405248_0%,#344238_58%,#2F3933_100%)] text-[#E8E5DC]">
       <div
         className="hero-beam absolute -left-1/3 top-[-40%] h-[180%] w-2/3 bg-gradient-to-r from-transparent via-[#FFB800]/10 to-transparent blur-3xl"
         aria-hidden="true"
