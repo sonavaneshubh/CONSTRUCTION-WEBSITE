@@ -1,5 +1,5 @@
-import { useId, useRef, useState, type FormEvent } from "react";
-import { Check, Copy, MessageCircle, Send } from "lucide-react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { Mail, MessageCircle, Send } from "lucide-react";
 import { company } from "../data/company";
 
 interface FormData {
@@ -10,6 +10,8 @@ interface FormData {
   location: string;
   message: string;
 }
+
+type SubmitState = "idle" | "sending" | "success" | "error";
 
 const initialData: FormData = {
   name: "",
@@ -32,6 +34,12 @@ const projectTypes = [
   "Other Infrastructure Inquiry",
 ];
 
+const contactFormEndpoint =
+  (import.meta.env.VITE_CONTACT_FORM_ENDPOINT as string | undefined)?.trim() ||
+  `https://formsubmit.co/ajax/${company.email}`;
+const web3formsAccessKey =
+  (import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string | undefined)?.trim();
+
 const labelClass =
   "contact-label mb-2 block font-bold uppercase tracking-wider text-[#4A4F55]";
 const controlClass =
@@ -41,15 +49,20 @@ export default function ContactForm() {
   const id = useId();
   const [data, setData] = useState<FormData>(initialData);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
-  const [handoffOpen, setHandoffOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const handoffRef = useRef<HTMLDivElement>(null);
-  const detailsRef = useRef<HTMLTextAreaElement>(null);
+  const [submitState, setSubmitState] = useState<SubmitState>("idle");
+  const [submitError, setSubmitError] = useState("");
+  const statusRef = useRef<HTMLDivElement>(null);
+  const honeypotRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (submitState !== "idle") statusRef.current?.focus();
+  }, [submitState]);
 
   const update = (field: keyof FormData, value: string) => {
     setData((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: undefined }));
-    setCopied(false);
+    setSubmitState("idle");
+    setSubmitError("");
   };
 
   const validate = () => {
@@ -72,102 +85,205 @@ export default function ContactForm() {
   };
 
   const inquirySummary = [
-    "Project inquiry for G A Palve and Company",
-    data.name && `Name: ${data.name}`,
-    data.phone && `Phone: ${data.phone}`,
-    data.email && `Email: ${data.email}`,
-    data.projectType && `Service: ${data.projectType}`,
-    data.location && `Location: ${data.location}`,
-    data.message && `Details: ${data.message}`,
-  ]
-    .filter(Boolean)
-    .join("\n");
+    `Name: ${data.name}`,
+    `Phone: ${data.phone}`,
+    `Email: ${data.email}`,
+    `Project Name: ${data.projectType || "Not specified"}`,
+    `Location: ${data.location || "Not specified"}`,
+    `Details: ${data.message}`,
+  ].join("\n");
 
+  const emailUrl = `mailto:${company.email}?subject=${encodeURIComponent(
+    `Project inquiry from ${data.name || "website visitor"}`
+  )}&body=${encodeURIComponent(inquirySummary)}`;
   const whatsappUrl = `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(
-    company.whatsappMessage
+    inquirySummary
   )}`;
+
+  const sendInquiry = async () => {
+    if (contactFormEndpoint.includes("web3forms.com") && !web3formsAccessKey) {
+      setSubmitError("Add VITE_WEB3FORMS_ACCESS_KEY to enable Web3Forms email delivery.");
+      setSubmitState("error");
+      return;
+    }
+
+    setSubmitState("sending");
+    setSubmitError("");
+
+    try {
+      const subject = `New project inquiry from ${data.name}`;
+      const response = await fetch(contactFormEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: web3formsAccessKey || undefined,
+          _subject: subject,
+          _template: "table",
+          _replyto: data.email,
+          _honey: honeypotRef.current?.value ?? "",
+          Name: data.name,
+          Phone: data.phone,
+          Email: data.email,
+          "Project Name": data.projectType || "Not specified",
+          Location: data.location || "Not specified",
+          Details: data.message,
+        }),
+      });
+
+      const result: unknown = await response.json().catch(() => null);
+      const successValue = (result as { success?: unknown } | null)?.success;
+      const resultMessage = (result as { message?: unknown } | null)?.message;
+      const succeeded = response.ok && successValue !== false && successValue !== "false";
+
+      if (!succeeded) {
+        throw new Error(
+          typeof resultMessage === "string" && resultMessage.trim()
+            ? resultMessage
+            : "The email service did not accept the inquiry. Please try again."
+        );
+      }
+
+      setSubmitState("success");
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error && error.message.trim()
+          ? error.message
+          : "We could not send the inquiry. Please try again or use an email app."
+      );
+      setSubmitState("error");
+    }
+  };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    if (!validate()) return;
-    setHandoffOpen(true);
-    setCopied(false);
-    window.requestAnimationFrame(() => handoffRef.current?.focus());
+    if (submitState === "sending" || !validate()) return;
+    void sendInquiry();
   };
 
-  const copyDetails = async () => {
-    try {
-      await navigator.clipboard.writeText(inquirySummary);
-      setCopied(true);
-    } catch {
-      detailsRef.current?.select();
-      setCopied(false);
-    }
+  const resetForm = () => {
+    setData(initialData);
+    setErrors({});
+    setSubmitState("idle");
+    setSubmitError("");
+    window.requestAnimationFrame(() => document.getElementById(`${id}-name`)?.focus());
   };
 
   return (
     <div className="w-full min-w-0 max-w-full">
-      {handoffOpen && (
+      {submitState !== "idle" && (
         <div
-          ref={handoffRef}
+          ref={statusRef}
           tabIndex={-1}
-          role="status"
+          role={submitState === "error" ? "alert" : "status"}
           aria-live="polite"
-          className="panel mb-5 border-[#FFB800]/50 p-5 outline-none sm:p-6"
+          className={`panel mb-5 p-5 outline-none sm:p-6 ${
+            submitState === "error" ? "border-red-300" : "border-[#FFB800]/50"
+          }`}
         >
-          <span className="eyebrow mb-2">Next Step</span>
+          <span className="eyebrow mb-2">
+            {submitState === "success"
+              ? "Inquiry Sent"
+              : submitState === "error"
+                ? "Delivery Issue"
+                : "Sending"}
+          </span>
           <h3 className="font-heading text-xl font-bold text-[#242620] sm:text-2xl">
-            Ready to continue on WhatsApp
+            {submitState === "success"
+              ? "Your inquiry has been sent"
+              : submitState === "error"
+                ? "We could not send the email"
+                : "Sending your inquiry..."}
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-[#666C73]">
-            Your details stay in this browser until you paste them into WhatsApp. This website
-            does not store or send them. We will not add your number to any list.
+            {submitState === "success"
+              ? "Our team has received your project details by email and will review them shortly."
+              : submitState === "error"
+                ? "Your details are still here. Try again, send them from your email app, or continue on WhatsApp."
+                : "Please keep this page open while we send your details."}
           </p>
 
-          <label htmlFor={`${id}-summary`} className={`${labelClass} mt-5`}>
-            Inquiry details to paste
-          </label>
-          <textarea
-            ref={detailsRef}
-            id={`${id}-summary`}
-            readOnly
-            rows={6}
-            value={inquirySummary}
-            className={`${controlClass} resize-none text-xs leading-relaxed`}
-          />
+          {submitState === "error" && (
+            <p className="mt-2 text-sm font-semibold text-red-700">{submitError}</p>
+          )}
 
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-            <button type="button" onClick={copyDetails} className="btn btn-outline">
-              {copied ? <Check size={17} /> : <Copy size={17} />}
-              {copied ? "Copied" : "Copy details"}
-            </button>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary"
-            >
-              <MessageCircle size={17} />
-              Open WhatsApp
-            </a>
-            <button
-              type="button"
-              onClick={() => setHandoffOpen(false)}
-              className="min-h-11 px-4 text-sm font-semibold text-[#666C73] transition-colors hover:text-[#7A5010]"
-            >
-              Edit details
-            </button>
+            {submitState === "success" && (
+              <>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                >
+                  <MessageCircle size={17} />
+                  Continue on WhatsApp
+                </a>
+                <button type="button" onClick={resetForm} className="btn btn-outline">
+                  Send another inquiry
+                </button>
+              </>
+            )}
+
+            {submitState === "error" && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => void sendInquiry()}
+                  className="btn btn-primary"
+                >
+                  <Send size={17} />
+                  Try again
+                </button>
+                <a href={emailUrl} className="btn btn-outline">
+                  <Mail size={17} />
+                  Send with email app
+                </a>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline"
+                >
+                  <MessageCircle size={17} />
+                  WhatsApp
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setSubmitState("idle")}
+                  className="min-h-11 px-4 text-sm font-semibold text-[#666C73] transition-colors hover:text-[#7A5010]"
+                >
+                  Edit details
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} noValidate className="panel contact-form w-full min-w-0 max-w-full p-5 sm:p-6">
+      <form
+        onSubmit={handleSubmit}
+        noValidate
+        aria-busy={submitState === "sending"}
+        className="panel contact-form w-full min-w-0 max-w-full p-5 sm:p-6"
+      >
+        <input
+          ref={honeypotRef}
+          type="text"
+          name="_honey"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="hidden"
+        />
         <span className="eyebrow mb-2">Project Inquiry</span>
         <h3 className="font-heading text-2xl font-bold text-[#242620] sm:text-3xl">
           Send Us the Details
         </h3>
         <p className="mt-1 text-sm leading-relaxed text-[#666C73] sm:text-base">
-          Prepare a project inquiry, then continue on WhatsApp. Nothing is submitted to a server.
+          Send your project inquiry by email, or continue on WhatsApp after sending.
         </p>
 
         <div className="mt-7 grid gap-5 sm:grid-cols-2">
@@ -288,13 +404,16 @@ export default function ContactForm() {
         </div>
 
         <div className="mt-7">
-          <button type="submit" className="btn btn-submit btn-shine w-full sm:w-auto">
-            <Send size={17} />
-            Prepare WhatsApp Inquiry
+          <button
+            type="submit"
+            disabled={submitState === "sending"}
+            className="btn btn-submit btn-shine w-full sm:w-auto disabled:cursor-wait disabled:opacity-70"
+          >
+            <Send size={17} className={submitState === "sending" ? "animate-pulse" : ""} />
+            {submitState === "sending" ? "Sending Inquiry..." : "Send Project Inquiry"}
           </button>
           <p className="mt-3 max-w-xl text-xs leading-relaxed text-[#666C73]">
-            You will review and paste your details into WhatsApp yourself. No information is sent
-            by this website.
+            Your details are sent to our team by email. We will not add your number to any list.
           </p>
         </div>
       </form>

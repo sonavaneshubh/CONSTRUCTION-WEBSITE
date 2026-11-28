@@ -16,11 +16,11 @@ const legalContent = {
     sections: [
       {
         title: "Information You Provide",
-        copy: "Project details typed into the inquiry form remain in your browser until you choose to copy and paste them into WhatsApp or send them by email. This website does not transmit form contents to a server or store them.",
+        copy: `Project details submitted through the inquiry form are sent by email to ${company.email} using our email delivery provider. The details are used to respond to your enquiry and are not stored in this website's database.`,
       },
       {
         title: "WhatsApp Enquiries",
-        copy: `The WhatsApp button opens WhatsApp with a general message. Any details you paste there are sent through WhatsApp and are governed by WhatsApp's own privacy terms. Please avoid sharing sensitive information you do not want to send by messaging app.`,
+        copy: "The WhatsApp buttons open WhatsApp with your inquiry details or a general message. Anything you send there is handled by WhatsApp under its own privacy terms. Please avoid sharing sensitive information you do not want to send by messaging app.",
       },
       {
         title: "Calls, Email and Office Visits",

@@ -39,6 +39,7 @@ const projectMenu = [
 
 export default function HomeHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileDropdown, setMobileDropdown] = useState<"/services" | "/projects" | null>(null);
   const [logoFailed, setLogoFailed] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const menuRef = useFocusTrap<HTMLDivElement>(mobileOpen);
@@ -68,7 +69,10 @@ export default function HomeHeader() {
   useEffect(() => {
     if (!mobileOpen) return;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMobileOpen(false);
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+        setMobileDropdown(null);
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -79,7 +83,10 @@ export default function HomeHeader() {
 
     const media = window.matchMedia("(min-width: 1024px)");
     const handleChange = (event: MediaQueryListEvent) => {
-      if (event.matches) setMobileOpen(false);
+      if (event.matches) {
+        setMobileOpen(false);
+        setMobileDropdown(null);
+      }
     };
     if (typeof media.addEventListener === "function") {
       media.addEventListener("change", handleChange);
@@ -91,7 +98,10 @@ export default function HomeHeader() {
 
   const isActiveLink = (isActive: boolean) => isActive;
 
-  const closeMenu = () => setMobileOpen(false);
+  const closeMenu = () => {
+    setMobileOpen(false);
+    setMobileDropdown(null);
+  };
 
   const desktopLinkClass = (isActive: boolean) =>
     `relative whitespace-nowrap px-2 py-2 text-[11px] font-bold transition-colors xl:px-2.5 xl:text-xs 2xl:text-sm ${
@@ -110,14 +120,14 @@ export default function HomeHeader() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 rounded-b-2xl border-b border-[#5A6154] bg-header transition-[box-shadow] duration-300 ${
+        className={`fixed inset-x-0 top-0 z-50 rounded-b-2xl border-b border-[#59685D] bg-[linear-gradient(110deg,#405248_0%,#344238_58%,#2F3933_100%)] transition-[box-shadow] duration-300 ${
           isHome && isScrolled
             ? "shadow-[0_6px_24px_rgba(0,0,0,0.16)]"
             : "shadow-[0_10px_35px_rgba(0,0,0,0.12)]"
         }`}
       >
         <div className="mx-auto w-full max-w-[1500px] px-5 sm:px-8 lg:px-12 xl:px-16">
-          <div className="flex h-16 items-center justify-between gap-2 lg:h-[4.25rem]">
+          <div className="flex h-14 items-center justify-between gap-2 lg:h-16">
             <Link
               to="/"
               onClick={closeMenu}
@@ -125,7 +135,7 @@ export default function HomeHeader() {
               aria-label="G.A. Palve & Company Home"
             >
               {!logoFailed && (
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white p-1 shadow-sm ring-1 ring-[#EAE6DC] sm:h-11 sm:w-11 lg:h-12 lg:w-12">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white p-1 shadow-sm ring-1 ring-[#EAE6DC] sm:h-10 sm:w-10 lg:h-11 lg:w-11">
                   <img
                     src={HOME_LOGO_SRC}
                     alt=""
@@ -307,63 +317,112 @@ export default function HomeHeader() {
         aria-modal="true"
         aria-label="Site menu"
         tabIndex={-1}
-        className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto rounded-b-2xl border-t border-[#EAE6DC] bg-white px-5 pb-8 pt-4 shadow-[0_20px_45px_rgba(30,27,22,0.14)] lg:hidden"
+        className="fixed inset-x-0 bottom-0 top-14 z-40 overflow-y-auto rounded-b-2xl border-t border-[#EAE6DC] bg-white px-5 pb-8 pt-4 shadow-[0_20px_45px_rgba(30,27,22,0.14)] lg:hidden"
       >
         <nav className="flex flex-col divide-y divide-[#EAE6DC]" aria-label="Mobile navigation">
-          {navLinks.map((link, index) => (
-            <div
-              key={link.path}
-              className="mobile-nav-item"
-              style={{ animationDelay: `${index * 35}ms` }}
-            >
-              <NavLink
-                to={link.path}
-                end={link.path === "/"}
-                onClick={closeMenu}
-                className={({ isActive }) => mobileLinkClass(isActive)}
+          {navLinks.map((link, index) => {
+            const hasSubmenu = link.path === "/services" || link.path === "/projects";
+            const isExpanded = mobileDropdown === link.path;
+            const submenuId =
+              link.path === "/services"
+                ? "mobile-services-submenu"
+                : "mobile-projects-submenu";
+
+            return (
+              <div
+                key={link.path}
+                className="mobile-nav-item"
+                style={{ animationDelay: `${index * 35}ms` }}
               >
-                {({ isActive }) => (
-                  <>
-                    {isActiveLink(isActive) && (
-                      <span
-                        className="absolute bottom-3 left-0 top-3 w-[3px] rounded-full bg-[#FFB800]"
+                <div className="flex items-center">
+                  <NavLink
+                    to={link.path}
+                    end={link.path === "/"}
+                    onClick={closeMenu}
+                    className={({ isActive }) =>
+                      `${mobileLinkClass(isActive)} ${hasSubmenu ? "flex-1" : "w-full"}`
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        {isActiveLink(isActive) && (
+                          <span
+                            className="absolute bottom-3 left-0 top-3 w-[3px] rounded-full bg-[#FFB800]"
+                            aria-hidden="true"
+                          />
+                        )}
+                        {link.label}
+                      </>
+                    )}
+                  </NavLink>
+                  {hasSubmenu && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (link.path === "/services") {
+                          setMobileDropdown((current) =>
+                            current === "/services" ? null : "/services"
+                          );
+                        } else {
+                          setMobileDropdown((current) =>
+                            current === "/projects" ? null : "/projects"
+                          );
+                        }
+                      }}
+                      className="mr-3 grid h-11 w-11 shrink-0 place-items-center rounded-lg text-[#4A4F55] transition-colors hover:bg-[#F6F5F1] hover:text-[#7A5010] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A5010]"
+                      aria-label={`Toggle ${link.label} submenu`}
+                      aria-expanded={isExpanded}
+                      aria-controls={submenuId}
+                    >
+                      <ChevronDown
+                        size={18}
+                        className={`transition-transform duration-200 ${
+                          isExpanded ? "rotate-180" : ""
+                        }`}
                         aria-hidden="true"
                       />
-                    )}
-                    {link.label}
-                  </>
+                    </button>
+                  )}
+                </div>
+                {link.path === "/services" && (
+                  <div
+                    id={submenuId}
+                    hidden={!isExpanded}
+                    className="mb-3 ml-4 grid gap-1 border-l border-[#FFB800]/40 pl-4"
+                  >
+                    {serviceMenu.map((item) => (
+                      <Link
+                        key={item.id}
+                        to={`/services#${item.id}`}
+                        onClick={closeMenu}
+                        className="flex min-h-11 items-center text-sm font-semibold text-[#4A4F55] transition-colors hover:text-[#7A5010]"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
                 )}
-              </NavLink>
-              {link.path === "/services" && (
-                <div className="mb-3 ml-4 grid gap-1 border-l border-[#FFB800]/40 pl-4">
-                  {serviceMenu.map((item) => (
-                    <Link
-                      key={item.id}
-                      to={`/services#${item.id}`}
-                      onClick={closeMenu}
-                      className="flex min-h-11 items-center text-sm font-semibold text-[#4A4F55] transition-colors hover:text-[#7A5010]"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-              {link.path === "/projects" && (
-                <div className="mb-3 ml-4 grid gap-1 border-l border-[#FFB800]/40 pl-4">
-                  {projectMenu.map((item) => (
-                    <Link
-                      key={item.slug}
-                      to={item.slug === "all" ? "/projects" : `/projects?category=${item.slug}`}
-                      onClick={closeMenu}
-                      className="flex min-h-11 items-center text-sm font-semibold text-[#4A4F55] transition-colors hover:text-[#7A5010]"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+                {link.path === "/projects" && (
+                  <div
+                    id={submenuId}
+                    hidden={!isExpanded}
+                    className="mb-3 ml-4 grid gap-1 border-l border-[#FFB800]/40 pl-4"
+                  >
+                    {projectMenu.map((item) => (
+                      <Link
+                        key={item.slug}
+                        to={item.slug === "all" ? "/projects" : `/projects?category=${item.slug}`}
+                        onClick={closeMenu}
+                        className="flex min-h-11 items-center text-sm font-semibold text-[#4A4F55] transition-colors hover:text-[#7A5010]"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </nav>
 
         <div className="mobile-nav-item mt-5 rounded-xl border border-[#EAE6DC] bg-[#FAF8F3] p-2" style={{ animationDelay: "210ms" }}>

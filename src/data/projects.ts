@@ -99,7 +99,7 @@ export const projects: Project[] = [
   {
     id: "rural-well-development",
     title: "Rural Well Construction & Water Resource Development",
-    location: "Karjat Taluka, Ahilyanagar District",
+    location: "Karjat Taluka, Ahilyanagar District, Maharashtra",
     category: "Water & Utilities",
     categorySlug: "water",
     year: "2023",
@@ -128,72 +128,9 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "apex-commercial-complex",
-    title: "Apex Horizon Corporate Hub & Commercial Tower",
-    location: "Commercial IT Park, Pune",
-    category: "Buildings & Towers",
-    categorySlug: "buildings",
-    year: "2023",
-    shortDescription:
-      "Multi-story corporate commercial complex featuring twin basements, premium glass facade, and earthquake-resistant RCC frame.",
-    overview:
-      "A modern corporate headquarters building encompassing 220,000 sq.ft of built-up area across G+11 floors. G A Palve and Company executed the complete civil package including deep basement shoring, raft foundation, high-strength concrete superstructure, post-tensioned slabs, and facade sub-structures.",
-    scope: [
-      "Deep basement excavation with contiguous pile shoring",
-      "Mass concrete raft foundation and shear wall construction",
-      "Post-tensioned RCC floor slabs for column-free office layouts",
-      "Integrated fire suppression, MEP conduits & elevator shafts",
-      "Energy-efficient curtain wall framing & granite lobby finishes",
-    ],
-    status: "Completed",
-    coverImage: "/images/hero/commercial-building.jpg",
-    gallery: [
-      "/images/hero/commercial-building.jpg",
-      "/images/hero/interior-office.jpg",
-      "/images/hero/tower-cranes.jpg",
-    ],
-    featured: true,
-    metrics: [
-      { label: "Built-up Area", value: "220,000 Sq.Ft" },
-      { label: "Floors", value: "2 Basements + G + 11" },
-      { label: "Design Life", value: "75+ Years" },
-    ],
-  },
-  {
-    id: "industrial-solar-park",
-    title: "15 MW Ground-Mounted Industrial Solar Park",
-    location: "Solar Corridor, Gujarat",
-    category: "Solar & Clean Energy",
-    categorySlug: "solar",
-    year: "2024",
-    shortDescription:
-      "Civil and structural works for a 15 MW solar PV generation facility, including pile foundations and a 33 kV substation.",
-    overview:
-      "Executed the civil engineering and mounting infrastructure package for a 15 MW utility-scale solar park. The works encompassed land grading across 60 acres, 8,200 driven steel piles, galvanized module mounting structure erection, inverter substations, and internal access road network.",
-    scope: [
-      "Topographical survey, land clearance & contour grading across 60 acres",
-      "Hydraulic pile driving and structural anchoring for 8,200 piles",
-      "Assembly of seasonal-tilt hot-dip galvanized mounting structures",
-      "Civil construction of 33 kV switchyard, control room & transformer pads",
-      "All-weather gravel access roads and boundary security walling",
-    ],
-    status: "Commissioned & Grid-Tied",
-    coverImage: "/images/hero/solar-farm.jpg",
-    gallery: [
-      "/images/hero/solar-farm.jpg",
-      "/images/hero/land-development.jpg",
-    ],
-    featured: true,
-    metrics: [
-      { label: "Plant Capacity", value: "15 MW Solar PV" },
-      { label: "Land Area", value: "60 Acres" },
-      { label: "Piles Driven", value: "8,200 Points" },
-    ],
-  },
-  {
     id: "river-bridge-substructure",
     title: "Prestressed Concrete River Bridge & Approaches",
-    location: "River Crossing, Karnataka Border",
+    location: "River Crossing, Maharashtra",
     category: "Civil & Infrastructure",
     categorySlug: "civil",
     year: "2023",
@@ -219,37 +156,6 @@ export const projects: Project[] = [
       { label: "Span Length", value: "320 Meters" },
       { label: "Deep Piles", value: "48 Large-Diameter" },
       { label: "Approach Roads", value: "1.8 Kilometers" },
-    ],
-  },
-  {
-    id: "logistics-hub-development",
-    title: "Heavy Engineering Logistics Park & Land Development",
-    location: "Industrial Corridor, Gujarat",
-    category: "Civil & Infrastructure",
-    categorySlug: "civil",
-    year: "2024",
-    shortDescription:
-      "Master-planned industrial land development spanning 40 acres with heavy vehicle pavements, PEB warehouses, and storm grids.",
-    overview:
-      "Comprehensive site development and civil construction of an integrated industrial logistics park. Included bulk cutting and filling of 85,000 cu.m of earth, laser-screeded heavy-duty concrete flooring for warehousing, perimeter security infrastructure, and high-load truck aprons.",
-    scope: [
-      "85,000 cu.m bulk earthmoving & laser grading",
-      "Heavy-duty laser-screeded vacuum dewatered concrete floors (VDF)",
-      "Prefabricated engineered building (PEB) foundations and anchor bolts",
-      "RCC stormwater channels, culverts & oil-water separator basins",
-      "Industrial high-security compound wall and automated toll barriers",
-    ],
-    status: "Completed",
-    coverImage: "/images/hero/land-development.jpg",
-    gallery: [
-      "/images/hero/jcb-earthmoving.jpg",
-      "/images/hero/highway.jpg",
-    ],
-    featured: false,
-    metrics: [
-      { label: "Park Extent", value: "40 Acres" },
-      { label: "Earthwork", value: "85,000 Cu.M" },
-      { label: "Paved Apron", value: "45,000 Sq.M" },
     ],
   },
 ];

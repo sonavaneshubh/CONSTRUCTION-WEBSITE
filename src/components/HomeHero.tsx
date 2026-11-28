@@ -82,6 +82,49 @@ const serviceCategories = [
 
 type Phase = "idle" | "prepare" | "animate";
 
+function SnapshotCount({ target, suffix }: { target: number; suffix: string }) {
+  const [count, setCount] = useState(() =>
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? target
+      : 0,
+  );
+
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+
+    let frame = 0;
+    const timeout = window.setTimeout(() => {
+      const startTime = performance.now();
+      const duration = 1200;
+
+      const update = (now: number) => {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+        setCount(Math.round(target * easedProgress));
+
+        if (progress < 1) frame = requestAnimationFrame(update);
+      };
+
+      frame = requestAnimationFrame(update);
+    }, 150);
+
+    return () => {
+      window.clearTimeout(timeout);
+      cancelAnimationFrame(frame);
+    };
+  }, [target]);
+
+  return <span aria-label={`${target}${suffix}`}>{count}{suffix}</span>;
+}
+
 export default function HomeHero() {
   const [current, setCurrent] = useState(0);
   const [incoming, setIncoming] = useState<number | null>(null);
@@ -420,12 +463,44 @@ export default function HomeHero() {
           </div>
         </div>
 
+        <div
+          className="hero-stagger absolute right-12 top-24 z-20 hidden w-56 rounded-xl border border-white/15 bg-[#17232D]/40 p-4 shadow-[0_16px_40px_rgba(0,0,0,0.18)] backdrop-blur-md lg:block xl:right-16 xl:top-1/2 xl:w-80 xl:-translate-y-1/2 xl:p-5"
+          style={{ animationDelay: "1120ms" }}
+          aria-label="Project snapshot"
+        >
+          <span className="text-[9px] font-extrabold uppercase tracking-[0.22em] text-[#D6A12B] xl:text-[10px]">
+            Project Snapshot
+          </span>
+          <p className="mt-1 flex items-center gap-2 font-heading text-sm font-bold text-white xl:text-base">
+            <Landmark size={14} className="shrink-0 text-[#D6A12B]" aria-hidden="true" />
+            Ganesh Palve and Group
+          </p>
+          <div className="mt-4 grid grid-cols-2 gap-4 border-t border-white/20 pt-4">
+            <div className="min-w-0">
+              <p className="font-heading text-2xl font-extrabold leading-none tracking-[-0.04em] text-[#E2B344] tabular-nums xl:text-[1.75rem]">
+                <SnapshotCount target={50} suffix="+" />
+              </p>
+              <p className="mt-1 text-[9px] font-bold uppercase leading-tight tracking-[0.08em] text-white/90 xl:text-[10px]">
+                Projects Delivered
+              </p>
+            </div>
+            <div className="min-w-0 border-l border-white/25 pl-4">
+              <p className="font-heading text-2xl font-extrabold leading-none tracking-[-0.04em] text-[#E2B344] tabular-nums xl:text-[1.75rem]">
+                <SnapshotCount target={120} suffix="+" />
+              </p>
+              <p className="mt-1 text-[9px] font-bold uppercase leading-tight tracking-[0.08em] text-white/90 xl:text-[10px]">
+                KM Infrastructure
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="mt-10 hidden border-t border-white/25 pt-5 min-[769px]:block lg:mt-8">
           <ul className="grid grid-cols-2 gap-y-3 sm:grid-cols-4 xl:grid-cols-7 xl:justify-start xl:gap-x-4 xl:gap-y-0">
             {serviceCategories.map(({ label, icon: Icon }, index) => (
               <li
                 key={label}
-                className={`flex min-w-0 min-h-10 items-center gap-2 text-[10px] font-semibold leading-tight text-white/95 sm:text-[11px] ${
+                className={`flex min-w-0 min-h-10 items-center justify-center gap-2 text-center text-[10px] font-semibold leading-tight text-white/95 sm:text-[11px] ${
                   index > 0 ? "xl:border-l xl:border-white/20" : ""
                 }`}
               >
